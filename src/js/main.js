@@ -14,7 +14,7 @@ var orbitControl;
 var rollingGroundSphere;
 var heroSphere;
 var mixer;
-var rollingSpeed=0.008;
+var rollingSpeed=0.005;
 var worldRadius=26;
 var sphericalHelper;
 var pathAngleValues;
@@ -645,24 +645,24 @@ function onWindowResize() {
 }
 
 function stopGame() {
-	explode();
-	mixer.stopAllAction();
-	console.log(scoreText.innerHTML);
-	console.log(document.getElementById("score-maximo").innerHTML);
-	if (scoreText.innerHTML > document.getElementById("score-maximo").innerHTML) {
-		document.getElementById("score-maximo").innerHTML = scoreText.innerHTML;
-	}
-	document.getElementById("gameOverMenu").style.display = "flex";
-	document.getElementById("restartButton").addEventListener("click", function() {
-		restartGame();
-	});
+    explode();
+    mixer.stopAllAction();
+
+    // Atualiza o valor do score máximo se o score atual for maior
+    if (scoreText.innerHTML > document.getElementById("score-maximo").innerHTML) {
+        document.getElementById("score-maximo").innerHTML = scoreText.innerHTML;
+    }
+
+    // Exibe o menu de Game Over
+    document.getElementById("gameOverMenu").style.display = "flex";
+    document.getElementById("restartButton").onclick = restartGame; // Atualiza para garantir o evento correto
 }
 
 function restartGame() {
 	currentLane=middleLane;
 	scoreText.innerHTML = "0";
 	hasCollided=false;
-	rollingGroundSphere.rotation.x += 2;
+	rollingGroundSphere.rotation.x = 0;
 
 	document.getElementById("gameOverMenu").style.display = "none";
 	update()
