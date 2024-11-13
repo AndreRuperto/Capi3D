@@ -167,15 +167,9 @@ function handleKeyDown(keyEvent) {
             validMove = false;
         }
     } else if (keyEvent.keyCode === 38) { // Pulo
-        bounceValue = 0.1;
+        bounceValue = 0.1; // Valor ajustado para um pulo mais alto
         jumping = true;
         validMove = false;
-    }
-
-    // Atualiza o movimento do personagem apenas se o movimento for válido
-    if (validMove) {
-        jumping = true;
-        bounceValue = 0.06;
     }
 }
 
@@ -183,18 +177,15 @@ function handleKeyDown(keyEvent) {
 function updateJump() {
     if (jumping) {
         heroSphere.position.y += bounceValue;
-        bounceValue -= 0.01; // Simula a gravidade
+        bounceValue -= gravity; // Simula a gravidade
 
-        // Verifica se o herói está no chão novamente
+        // Verifica se a capivara está no chão novamente
         if (heroSphere.position.y <= heroBaseY) {
             heroSphere.position.y = heroBaseY;
             jumping = false;
             bounceValue = 0;
         }
     }
-
-    // Suaviza a transição no eixo X
-    heroSphere.position.x += (currentLane - heroSphere.position.x) * 0.1;
 }
 
 // No loop de animação, adicione o updateJump() para atualizar o pulo e a posição
@@ -319,8 +310,28 @@ function addWorld() {
         }
     }
 
-    // Adicionando árvores ao mundo
-    addWorldTrees();
+    // Adicionando árvores ao mundo com uma zona segura
+    addWorldTreesWithSafeZone();
+}
+
+function addWorldTreesWithSafeZone() {
+    var numTrees = 36;
+    var gap = 6.28 / numTrees;
+    var safeZoneRadius = 5;  // Define a zona segura ao redor do personagem
+
+    for (var i = 0; i < numTrees; i++) {
+        var angle = i * gap;
+
+        // Calcula a posição da árvore
+        var xPos = worldRadius * Math.sin(angle);
+        var zPos = worldRadius * Math.cos(angle);
+
+        // Verifica se a árvore está fora da zona segura
+        if (Math.sqrt(xPos * xPos + zPos * zPos) > safeZoneRadius) {
+            addTree(false, angle, true);
+            addTree(false, angle, false);
+        }
+    }
 }
 
 function addLight() {
@@ -533,27 +544,23 @@ function tightenTree(vertices, sides, currentTier) {
 
 function update() {
     if (!heroSphere) {
-        // Se heroSphere não estiver carregado, apenas retorne e não faça nada
         requestAnimationFrame(update);
         return;
     }
 
-	if (hasCollided) {
-		stopGame();
-		return;
-	}
-
-    // stats.update();
-    // animate
-    rollingGroundSphere.rotation.x += rollingSpeed;
-	console.log(rollingGroundSphere.rotation.x)
-    if (heroSphere.position.y <= heroBaseY) {
-        jumping = false;
-        bounceValue = (Math.random() * 0.03) + 0.005;
+    if (hasCollided) {
+        stopGame();
+        return;
     }
-    heroSphere.position.y += bounceValue;
+
+    rollingGroundSphere.rotation.x += rollingSpeed;
+
+    // Atualize o pulo
+    updateJump();
+
+    // Atualize o movimento lateral sem afetar o pulo
     heroSphere.position.x += (currentLane - heroSphere.position.x) * 0.1;
-    bounceValue -= gravity;
+
     if (clock.getElapsedTime() > treeReleaseInterval) {
         clock.start();
         addPathTree();
@@ -562,10 +569,11 @@ function update() {
             scoreText.innerHTML = score.toString();
         }
     }
+
     doTreeLogic();
     doExplosionLogic();
     render();
-    requestAnimationFrame(update); // request next update
+    requestAnimationFrame(update);
 }
 
 function doTreeLogic(){
@@ -659,13 +667,16 @@ function stopGame() {
 }
 
 function restartGame() {
-	currentLane=middleLane;
-	scoreText.innerHTML = "0";
-	hasCollided=false;
-	rollingGroundSphere.rotation.x = 0;
+    // Reinicia a posição e a pontuação
+    currentLane = middleLane;
+    score = 0; // Reseta a pontuação
+    scoreText.innerHTML = "0"; // Atualiza o texto de pontuação para zero
+    hasCollided = false;
+    rollingGroundSphere.rotation.x = 0;
 
-	document.getElementById("gameOverMenu").style.display = "none";
-	update()
+    // Esconde o menu de Game Over e reinicia o jogo
+    document.getElementById("gameOverMenu").style.display = "none";
+    update();
 }
 
 // function restartGame() {
