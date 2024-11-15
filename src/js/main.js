@@ -14,7 +14,7 @@ var orbitControl;
 var rollingGroundSphere;
 var heroSphere;
 var mixer;
-var rollingSpeed=0.005;
+var rollingSpeed=0.004;
 var worldRadius=26;
 var sphericalHelper;
 var pathAngleValues;
