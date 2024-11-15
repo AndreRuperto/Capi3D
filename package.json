@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "main.js",
   "scripts": {
+    "clean": "node clean-cache.js",
+    "start": "npm run clean && parcel serve ./src/index.html",
+    "build": "npm run clean && parcel build ./src/index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
