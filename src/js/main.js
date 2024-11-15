@@ -654,7 +654,7 @@ function onWindowResize() {
 
 function stopGame() {
     explode();
-    mixer.stopAllAction();
+    mixer.timeScale = 0;
 
     // Atualiza o valor do score máximo se o score atual for maior
     if (scoreText.innerHTML > document.getElementById("score-maximo").innerHTML) {
@@ -673,6 +673,7 @@ function restartGame() {
     scoreText.innerHTML = "0"; // Atualiza o texto de pontuação para zero
     hasCollided = false;
     rollingGroundSphere.rotation.x = 0;
+    mixer.timeScale = 1;
 
     // Esconde o menu de Game Over e reinicia o jogo
     document.getElementById("gameOverMenu").style.display = "none";
