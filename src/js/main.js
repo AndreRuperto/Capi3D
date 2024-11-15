@@ -150,7 +150,7 @@ function handleKeyDown(keyEvent) {
     if (jumping) return; // Impede de iniciar novo movimento durante pulo
     let validMove = true;
 
-    if (keyEvent.keyCode === 37) { // Esquerda
+    if (keyEvent.keyCode === 37 || keyEvent.keyCode === 65) { // Esquerda (seta ou A)
         if (currentLane === middleLane) {
             currentLane = leftLane;
         } else if (currentLane === rightLane) {
@@ -158,7 +158,7 @@ function handleKeyDown(keyEvent) {
         } else {
             validMove = false;
         }
-    } else if (keyEvent.keyCode === 39) { // Direita
+    } else if (keyEvent.keyCode === 39 || keyEvent.keyCode === 68) { // Direita (seta ou D)
         if (currentLane === middleLane) {
             currentLane = rightLane;
         } else if (currentLane === leftLane) {
@@ -166,7 +166,7 @@ function handleKeyDown(keyEvent) {
         } else {
             validMove = false;
         }
-    } else if (keyEvent.keyCode === 38) { // Pulo
+    } else if (keyEvent.keyCode === 38 || keyEvent.keyCode === 87) { // Pulo (seta para cima ou W)
         bounceValue = 0.1; // Valor ajustado para um pulo mais alto
         jumping = true;
         validMove = false;
