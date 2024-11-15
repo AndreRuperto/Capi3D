@@ -656,9 +656,10 @@ function stopGame() {
     explode();
     mixer.timeScale = 0;
 
-    // Atualiza o valor do score máximo se o score atual for maior
-    if (scoreText.innerHTML > document.getElementById("score-maximo").innerHTML) {
-        document.getElementById("score-maximo").innerHTML = scoreText.innerHTML;
+    let currentScore = parseInt(scoreText.innerHTML, 10);
+    let maxScore = parseInt(document.getElementById("score-maximo").innerHTML, 10);
+    if (currentScore > maxScore) {
+        document.getElementById("score-maximo").innerHTML=scoreText.innerHTML;
     }
 
     // Exibe o menu de Game Over
