@@ -539,19 +539,19 @@ function update() {
     }
 
     if (score > 50) {
-        rollingSpeed = 0.006;
+        rollingSpeed = 0.0045;
     }
     if  (score > 100) {
-        rollingSpeed = 0.008;
+        rollingSpeed = 0.0048;
     }
     if (score > 200) {
-        rollingSpeed = 0.01;
+        rollingSpeed = 0.0052;
     }
     if (score > 300) {
-        rollingSpeed = 0.012;
+        rollingSpeed = 0.0055;
     }
     if (score > 400) {
-        rollingSpeed = 0.014;
+        rollingSpeed = 0.0065;
     }
 
     rollingGroundSphere.rotation.x += rollingSpeed;
