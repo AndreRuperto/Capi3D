@@ -38,16 +38,20 @@ var particles;
 var scoreText;
 var score;
 var hasCollided;
+var cameraInterval;
 
-init();
+createScene();
 
-function init() {
-	// set up the scene
-	createScene();
+// Quando o botão "Iniciar Jogo" for clicado, inicia o jogo
+document.getElementById("startButton").onclick = function() {
+    // Oculta o menu de início
+    document.getElementById("gameMenu").style.display = "none";
+    mixer.timeScale = 1;
+    cameraInterval = setInterval(randomCameraChange, 30000);
+    // Inicia o jogo
+    update();
+};
 
-	//call game loop
-	update();
-}
 
 function createScene(){
 	hasCollided=false;
@@ -197,6 +201,7 @@ function addHero() {
 			gltf.animations.forEach((clip) => { 
 				mixer.clipAction(clip).play(); 
 			}); 
+            mixer.timeScale = 0;
 		}
 		capivara.scale.set(0.2, 0.2, 0.2);
 		capivara.position.set(0, 2, 5);
@@ -527,6 +532,40 @@ function tightenTree(vertices, sides, currentTier) {
     }
 }
 
+function normalCameraPosition() {
+    camera.position.z = 6.5;
+	camera.position.y = 3;
+	camera.position.x = 0;
+
+    camera.lookAt(0, 0, 0);
+}
+
+function sideviewCameraPosition() {
+    camera.position.z = 5;
+	camera.position.y = 4;
+    camera.position.x = -5;
+
+    camera.lookAt(0, 0, 0);
+}
+
+function invertedCameraPosition() {
+    camera.position.z = -6;
+	camera.position.y = 4;
+	camera.position.x = 1;
+
+    camera.lookAt(0, 0, 1);
+}
+
+function randomCameraChange() {
+    const cameraPositions = [normalCameraPosition, sideviewCameraPosition, invertedCameraPosition];
+    
+    // Seleciona uma posição aleatória
+    const randomIndex = Math.floor(Math.random() * cameraPositions.length);
+    
+    // Chama a função selecionada aleatoriamente
+    cameraPositions[randomIndex]();
+}
+
 function update() {
     if (!capivara) {
         requestAnimationFrame(update);
@@ -537,21 +576,22 @@ function update() {
         stopGame();
         return;
     }
-
+    if (score > 10) {
+    }
     if (score > 50) {
-        rollingSpeed = 0.006;
+        rollingSpeed = 0.005;
     }
     if  (score > 100) {
-        rollingSpeed = 0.008;
+        rollingSpeed = 0.006;
     }
     if (score > 200) {
-        rollingSpeed = 0.01;
+        rollingSpeed = 0.007;
     }
     if (score > 300) {
-        rollingSpeed = 0.012;
+        rollingSpeed = 0.008;
     }
     if (score > 400) {
-        rollingSpeed = 0.014;
+        rollingSpeed = 0.009;
     }
 
     rollingGroundSphere.rotation.x += rollingSpeed;
@@ -663,6 +703,7 @@ function handleTeclaPressionada(event) {
 }
 
 function stopGame() {
+    clearInterval(cameraInterval);
     explode();
     mixer.timeScale = 0;
 
@@ -679,6 +720,8 @@ function stopGame() {
 }
 
 function restartGame() {
+    cameraInterval = setInterval(randomCameraChange, 30000);
+    normalCameraPosition();
     document.removeEventListener("keydown", handleTeclaPressionada);
     // Reinicia a posição e a pontuação
     currentLane = middleLane;
