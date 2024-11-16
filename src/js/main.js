@@ -12,7 +12,7 @@ var sun;
 var ground;
 var orbitControl;
 var rollingGroundSphere;
-var heroSphere;
+var capivara;
 var mixer;
 var rollingSpeed=0.004;
 var worldRadius=26;
@@ -35,7 +35,6 @@ var particleGeometry;
 var particleCount=20;
 var explosionPower =1.06;
 var particles;
-//var stats;
 var scoreText;
 var score;
 var hasCollided;
@@ -62,7 +61,6 @@ function createScene(){
     sceneWidth=window.innerWidth;
     sceneHeight=window.innerHeight;
     scene = new THREE.Scene();//the 3d scene
-    // scene.fog = new THREE.FogExp2( 0xf0fff0, 0.14 );
     camera = new THREE.PerspectiveCamera( 60, sceneWidth / sceneHeight, 0.1, 1000 );//perspective camera
     renderer = new THREE.WebGLRenderer({alpha:true});//renderer with transparent backdrop
     renderer.setClearColor(0xfffafa, 1);
@@ -70,8 +68,6 @@ function createScene(){
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.setSize( sceneWidth, sceneHeight );
 	document.body.appendChild(renderer.domElement);
-	//stats = new Stats();
-	//dom.appendChild(stats.dom);
 	createTreesPool();
 	addWorld();
 	addHero();
@@ -89,10 +85,8 @@ function createScene(){
 	
 	scoreText = document.createElement('div');
 	scoreText.style.position = 'absolute';
-	//text2.style.zIndex = 1;    // if you still don't see the label, try uncommenting this
 	scoreText.style.width = 100;
 	scoreText.style.height = 100;
-	//scoreText.style.backgroundColor = "blue";
 	scoreText.innerHTML = "0";
 	scoreText.style.top = 50 + 'px';
 	scoreText.style.left = 10 + 'px';
@@ -147,7 +141,6 @@ function createTreesPool(){
 }
 
 function handleKeyDown(keyEvent) {
-    if (jumping) return; // Impede de iniciar novo movimento durante pulo
     let validMove = true;
 
     if (keyEvent.keyCode === 37 || keyEvent.keyCode === 65) { // Esquerda (seta ou A)
@@ -167,6 +160,7 @@ function handleKeyDown(keyEvent) {
             validMove = false;
         }
     } else if (keyEvent.keyCode === 38 || keyEvent.keyCode === 87) { // Pulo (seta para cima ou W)
+        if (jumping) return; // Impede de iniciar novo pulo durante pulo
         bounceValue = 0.1; // Valor ajustado para um pulo mais alto
         jumping = true;
         validMove = false;
@@ -176,25 +170,16 @@ function handleKeyDown(keyEvent) {
 // Função que controla o pulo e a suavização do movimento
 function updateJump() {
     if (jumping) {
-        heroSphere.position.y += bounceValue;
+        capivara.position.y += bounceValue;
         bounceValue -= gravity; // Simula a gravidade
 
         // Verifica se a capivara está no chão novamente
-        if (heroSphere.position.y <= heroBaseY) {
-            heroSphere.position.y = heroBaseY;
+        if (capivara.position.y <= heroBaseY) {
+            capivara.position.y = heroBaseY;
             jumping = false;
             bounceValue = 0;
         }
     }
-}
-
-// No loop de animação, adicione o updateJump() para atualizar o pulo e a posição
-function animate() {
-    requestAnimationFrame(animate);
-    if (mixer) mixer.update(clock.getDelta());
-    updateJump();
-    orbitControl.update();
-    renderer.render(scene, camera);
 }
 
 function addHero() { 
@@ -205,18 +190,18 @@ function addHero() {
 	const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
 	directionalLight.position.set(5, 5, 5).normalize(); scene.add(directionalLight);
 	loader.load(url.href, function (gltf) { 
-		heroSphere = gltf.scene;
+		capivara = gltf.scene;
 		if (gltf.animations && gltf.animations.length) { 
-			mixer = new THREE.AnimationMixer(heroSphere);
+			mixer = new THREE.AnimationMixer(capivara);
 			// mixer.timeScale = 5;
 			gltf.animations.forEach((clip) => { 
 				mixer.clipAction(clip).play(); 
 			}); 
 		}
-		heroSphere.scale.set(0.2, 0.2, 0.2);
-		heroSphere.position.set(0, 2, 5);
-		heroSphere.rotation.y = Math.PI;
-		scene.add(heroSphere); 
+		capivara.scale.set(0.2, 0.2, 0.2);
+		capivara.position.set(0, 2, 5);
+		capivara.rotation.y = Math.PI;
+		scene.add(capivara); 
 	}, undefined, function (error) { 
 		console.error(error); 
 	});
@@ -234,7 +219,7 @@ function addWorld() {
     var sides = 40;
     var tiers = 40;
     var sphereGeometry = new THREE.SphereGeometry(worldRadius, sides, tiers);
-    var sphereMaterial = new THREE.MeshStandardMaterial({ color: 0xfffafa, flatShading: true });
+    var sphereMaterial = new THREE.MeshStandardMaterial({ color: 0x556B2F, flatShading: true });
 
     var vertexIndex;
     var vertexVector = new THREE.Vector3();
@@ -543,7 +528,7 @@ function tightenTree(vertices, sides, currentTier) {
 }
 
 function update() {
-    if (!heroSphere) {
+    if (!capivara) {
         requestAnimationFrame(update);
         return;
     }
@@ -559,7 +544,7 @@ function update() {
     updateJump();
 
     // Atualize o movimento lateral sem afetar o pulo
-    heroSphere.position.x += (currentLane - heroSphere.position.x) * 0.1;
+    capivara.position.x += (currentLane - capivara.position.x) * 0.1;
 
     if (clock.getElapsedTime() > treeReleaseInterval) {
         clock.start();
@@ -586,7 +571,7 @@ function doTreeLogic(){
 		if(treePos.z>6 &&oneTree.visible){//gone out of our view zone
 			treesToRemove.push(oneTree);
 		}else { //check colision
-			if (treePos.distanceTo(heroSphere.position) <= 0.6) {
+			if (treePos.distanceTo(capivara.position) <= 0.8) {
 				hasCollided = true;
 			}
 		}
@@ -623,7 +608,7 @@ function doExplosionLogic() {
 
 function explode() {
     // Define a posição inicial das partículas
-    particles.position.set(heroSphere.position.x, 2, 4.8);
+    particles.position.set(capivara.position.x, 2, 4.8);
 
     const positions = [];
     for (let i = 0; i < particleCount; i++) {
@@ -652,6 +637,15 @@ function onWindowResize() {
 	camera.updateProjectionMatrix();
 }
 
+function handleTeclaPressionada(event) {
+    const tecla = event.key.toLowerCase();
+    const teclasAceitas = ["enter", " ", "arrowup", "arrowdown", "arrowleft", "arrowright", "w", "a", "s", "d"];
+
+    if (teclasAceitas.includes(tecla)) {
+        restartGame();
+    }
+}
+
 function stopGame() {
     explode();
     mixer.timeScale = 0;
@@ -665,115 +659,25 @@ function stopGame() {
     // Exibe o menu de Game Over
     document.getElementById("gameOverMenu").style.display = "flex";
     document.getElementById("restartButton").onclick = restartGame; // Atualiza para garantir o evento correto
+    document.addEventListener("keydown", handleTeclaPressionada);
 }
 
 function restartGame() {
+    document.removeEventListener("keydown", handleTeclaPressionada);
     // Reinicia a posição e a pontuação
     currentLane = middleLane;
     score = 0; // Reseta a pontuação
     scoreText.innerHTML = "0"; // Atualiza o texto de pontuação para zero
     hasCollided = false;
-    rollingGroundSphere.rotation.x = 0;
+    rollingGroundSphere.rotation.x += 2;
     mixer.timeScale = 1;
 
     // Esconde o menu de Game Over e reinicia o jogo
     document.getElementById("gameOverMenu").style.display = "none";
-    update();
+
+    // Aguarda 100ms antes de chamar update
+    setTimeout(() => {
+        console.log("Jogo reiniciado!");
+        update();
+    }, 100);
 }
-
-// function restartGame() {
-//     // Limpar o cenário, como o mundo e as árvores
-//     clearScene();
-
-//     // Reiniciar variáveis e objetos importantes do jogo
-//     resetGameVariables();
-
-//     // Recriar elementos do cenário
-//     createWorld();
-//     addTrees();
-
-//     // Reiniciar o estado da câmera, se necessário
-//     resetCamera();
-
-//     // Reiniciar a animação, caso tenha
-//     resetAnimations();
-
-//     // Reiniciar a pontuação ou outras variáveis de jogo
-//     resetScore();
-
-//     // Esconder o menu de Game Over
-//     document.getElementById("gameOverMenu").style.display = "none";
-
-//     // Iniciar o loop de animação novamente
-//     animate();
-// }
-
-// function clearScene() {
-//     // Remover árvores ou objetos do cenário
-//     treesInPath.forEach(tree => {
-//         scene.remove(tree);
-//     });
-//     treesInPath = [];  // Limpar a lista de árvores
-    
-//     // Remover qualquer outro objeto, como o jogador
-//     scene.remove(rollingGroundSphere);
-// }
-
-// function resetGameVariables() {
-//     // Exemplo: resetar o contador de pontos, variáveis de controle, etc.
-//     score = 0;
-//     isGameOver = false;
-// }
-
-// function createWorld() {
-//     // Recriar o mundo
-//     rollingGroundSphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-//     rollingGroundSphere.receiveShadow = true;
-//     rollingGroundSphere.castShadow = false;
-//     scene.add(rollingGroundSphere);
-
-//     // Criar o fundo do mundo, etc.
-//     addWorld();
-// }
-
-// function createWorld() {
-// 	var sides = 40;
-//     var tiers = 40;
-// 	var sphereGeometry = new THREE.SphereGeometry(worldRadius, sides, tiers);
-//     var sphereMaterial = new THREE.MeshStandardMaterial({ color: 0xfffafa, flatShading: true });
-//     // Recriar o mundo
-//     rollingGroundSphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-//     rollingGroundSphere.receiveShadow = true;
-//     rollingGroundSphere.castShadow = false;
-//     scene.add(rollingGroundSphere);
-
-//     // Criar o fundo do mundo, etc.
-//     addWorld();
-// }
-
-// function addTrees() {
-//     for (let i = 0; i < 10; i++) {  // Exemplo de quantidade de árvores
-//         addTree(false, i, Math.random() > 0.5);
-//     }
-// }
-
-// function resetCamera() {
-//     // Coloque a câmera na posição inicial, por exemplo:
-//     camera.position.set(0, 2, 5);
-//     camera.lookAt(0, 2, 0); // Ajuste conforme necessário
-// }
-
-// function resetAnimations() {
-//     mixer.stopAllAction();  // Para todas as animações
-//     // Reinicie a animação, se houver
-// }
-
-// function resetScore() {
-//     scoreText.innerHTML = "0"; // Resetar a pontuação
-// }
-
-// function animate() {
-//     requestAnimationFrame(animate);  // Continuar o loop de animação
-//     renderer.render(scene, camera);  // Renderizar a cena
-//     orbitControl.update();  // Se você estiver usando controles de câmera
-// }
