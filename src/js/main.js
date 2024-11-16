@@ -538,6 +538,22 @@ function update() {
         return;
     }
 
+    if (score > 50) {
+        rollingSpeed = 0.006;
+    }
+    if  (score > 100) {
+        rollingSpeed = 0.008;
+    }
+    if (score > 200) {
+        rollingSpeed = 0.01;
+    }
+    if (score > 300) {
+        rollingSpeed = 0.012;
+    }
+    if (score > 400) {
+        rollingSpeed = 0.014;
+    }
+
     rollingGroundSphere.rotation.x += rollingSpeed;
 
     // Atualize o pulo
@@ -670,6 +686,7 @@ function restartGame() {
     scoreText.innerHTML = "0"; // Atualiza o texto de pontuação para zero
     hasCollided = false;
     rollingGroundSphere.rotation.x += 2;
+    rollingSpeed = 0.004
     mixer.timeScale = 1;
 
     // Esconde o menu de Game Over e reinicia o jogo
