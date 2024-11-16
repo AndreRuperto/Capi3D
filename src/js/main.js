@@ -47,10 +47,47 @@ document.getElementById("startButton").onclick = function() {
     // Oculta o menu de início
     document.getElementById("gameMenu").style.display = "none";
     mixer.timeScale = 1;
-    cameraInterval = setInterval(randomCameraChange, 30000);
+    // cameraInterval = setInterval(randomCameraChange, 30000);
+
+    // Inicia a animação para mover a câmera
+    animateCameraTransition();
+
     // Inicia o jogo
     update();
 };
+
+function animateCameraTransition() {
+    // Posição final desejada
+    const targetPosition = new THREE.Vector3(0, 3, 6.5); 
+    const targetLookAt = new THREE.Vector3(0, 0, 0); // Ponto de interesse
+
+    // Função de animação para mover a câmera gradualmente
+    const duration = 2; // Duração da animação em segundos
+    const startPosition = camera.position.clone(); // Posição inicial
+    const startLookAt = new THREE.Vector3().copy(camera.position); // Posição de onde a câmera está olhando (pode ser ajustado se necessário)
+    
+    let startTime = performance.now(); // Marca o tempo de início da animação
+
+    function animate() {
+        // Calcula o tempo atual da animação
+        let elapsedTime = (performance.now() - startTime) / 1000;
+
+        // Interpolação linear para a posição da câmera
+        if (elapsedTime < duration) {
+            // Atualiza a posição da câmera
+            camera.position.lerpVectors(startPosition, targetPosition, elapsedTime / duration);
+            // Atualiza o ponto para onde a câmera está olhando
+            camera.lookAt(startLookAt.lerp(targetLookAt, elapsedTime / duration));
+            requestAnimationFrame(animate); // Continua a animação
+        } else {
+            // Garante que a câmera esteja exatamente na posição final
+            camera.position.copy(targetPosition);
+            camera.lookAt(targetLookAt);
+        }
+    }
+
+    animate(); // Inicia a animação
+}
 
 
 function createScene(){
@@ -74,14 +111,19 @@ function createScene(){
 	document.body.appendChild(renderer.domElement);
 	createTreesPool();
 	addWorld();
-	addHero();
+	const url = new URL('../../assets/modelos3D/capivaraPadrao.glb', import.meta.url);
+    addHero(url.href);
 	addLight();
 	addExplosion();
 	
-	camera.position.z = 6.5;
-	camera.position.y = 3;
-	orbitControl = new OrbitControls( camera, renderer.domElement );//helper to rotate around in scene
-	orbitControl.addEventListener( 'change', render );
+	camera.position.x = -0.08659074306443015;
+    camera.position.y = 2.4447632784041478;
+    camera.position.z = 3.8661441613329735;
+
+    // Alvo da câmera
+    camera.lookAt(-1.6803615076681788, 1.1622977535821688, 7.467959952579934);
+	// orbitControl = new OrbitControls( camera, renderer.domElement );//helper to rotate around in scene
+	// orbitControl.addEventListener( 'change', render );
 	
 	window.addEventListener('resize', onWindowResize, false);//resize callback
 
@@ -186,39 +228,76 @@ function updateJump() {
     }
 }
 
-function addHero() { 
-	const loader = new GLTFLoader(); 
-	const url = new URL('../../assets/capivaraCorrendo.glb', import.meta.url);
-	const light = new THREE.AmbientLight(0xffffff, 1);
-	scene.add(light); 
-	const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-	directionalLight.position.set(5, 5, 5).normalize(); scene.add(directionalLight);
-	loader.load(url.href, function (gltf) { 
-		capivara = gltf.scene;
-		if (gltf.animations && gltf.animations.length) { 
-			mixer = new THREE.AnimationMixer(capivara);
-			// mixer.timeScale = 5;
-			gltf.animations.forEach((clip) => { 
-				mixer.clipAction(clip).play(); 
-			}); 
+// Adicione as luzes uma única vez
+const light = new THREE.AmbientLight(0xffffff, 1);
+scene.add(light); 
+
+const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+directionalLight.position.set(5, 5, 5).normalize(); 
+scene.add(directionalLight);
+
+// Variáveis de controle de animação
+// Função para adicionar o modelo
+function addHero(modelUrl) {
+    const loader = new GLTFLoader(); 
+    
+    loader.load(modelUrl, function (gltf) { 
+        // Se já houver um modelo, remova-o antes de carregar o novo
+        if (capivara) {
+            scene.remove(capivara);
+            capivara = null;  // Limpa a variável
+        }
+        
+        capivara = gltf.scene; // Atribui o modelo carregado à variável capivara
+        
+        // Se houver animações, crie ou reinicie o mixer
+        if (gltf.animations && gltf.animations.length) { 
+            if (mixer) {
+                mixer.stopAllAction(); // Interrompe as animações anteriores
+            }
+            mixer = new THREE.AnimationMixer(capivara);
+            gltf.animations.forEach((clip) => { 
+                mixer.clipAction(clip).play(); 
+            }); 
             mixer.timeScale = 0;
-		}
-		capivara.scale.set(0.2, 0.2, 0.2);
-		capivara.position.set(0, 2, 5);
-		capivara.rotation.y = Math.PI;
-		scene.add(capivara); 
-	}, undefined, function (error) { 
-		console.error(error); 
-	});
-	function animate() { 
-		requestAnimationFrame(animate);
-		if (mixer) { 
-			mixer.update(clock.getDelta());
-		} 
-		renderer.render(scene, camera); 
-	}
-	animate(); 
+        }
+        
+        capivara.scale.set(0.2, 0.2, 0.2);
+        capivara.position.set(0, 2, 5);
+        capivara.rotation.y = Math.PI;
+        scene.add(capivara); 
+    }, undefined, function (error) { 
+        console.error(error); 
+    });
 }
+
+// Função de animação (chamada no loop de renderização)
+function animate() { 
+    requestAnimationFrame(animate);
+
+    // Atualiza o mixer de animação
+    if (mixer) { 
+        mixer.update(clock.getDelta());  // Atualiza a animação com base no deltaTime
+    }
+
+    // Renderiza o cenário
+    renderer.render(scene, camera); 
+}
+
+// Inicia o loop de animação
+animate();
+
+// Função para lidar com o clique nos botões
+document.getElementById("capivara").addEventListener("click", () => {
+    const url = new URL('../../assets/modelos3D/capivaraPadrao.glb', import.meta.url);
+    addHero(url.href);
+});
+
+document.getElementById("samurai").addEventListener("click", () => {
+    const url = new URL('../../assets/modelos3D/capivaraSamurai.glb', import.meta.url);
+    addHero(url.href);
+});
+
 
 function addWorld() {
     var sides = 40;
@@ -576,20 +655,30 @@ function update() {
         stopGame();
         return;
     }
+
+    if (isPaused) {
+        // Lógica de pausa: interrompe animações ou lógica do jogo
+        mixer.timeScale = 0;
+        clearInterval(cameraInterval);
+        return;
+    } else {
+        mixer.timeScale = 1;// Certifique-se de que `animate` seja a função principal do loop
+    }
+
     if (score > 50) {
-        rollingSpeed = 0.005;
+        rollingSpeed = 0.0045;
     }
     if  (score > 100) {
-        rollingSpeed = 0.006;
+        rollingSpeed = 0.0048;
     }
     if (score > 200) {
-        rollingSpeed = 0.007;
+        rollingSpeed = 0.0052;
     }
     if (score > 300) {
-        rollingSpeed = 0.008;
+        rollingSpeed = 0.0055;
     }
     if (score > 400) {
-        rollingSpeed = 0.009;
+        rollingSpeed = 0.0065;
     }
 
     rollingGroundSphere.rotation.x += rollingSpeed;
@@ -718,7 +807,7 @@ function stopGame() {
 }
 
 function restartGame() {
-    cameraInterval = setInterval(randomCameraChange, 30000);
+    // cameraInterval = setInterval(randomCameraChange, 30000);
     normalCameraPosition();
     document.removeEventListener("keydown", handleTeclaPressionada);
     // Reinicia a posição e a pontuação
@@ -739,3 +828,48 @@ function restartGame() {
         update();
     }, 100);
 }
+
+let isPaused = false;
+const pauseButton = document.getElementById("pause-button");
+const countdownElement = document.getElementById("countdown");
+
+function togglePause() {
+    isPaused = !isPaused;
+    pauseButton.textContent = isPaused ? "Resume" : "Pause";
+    if (!isPaused) {
+        startCountdown(() => {
+            isPaused = false;
+            // cameraInterval = setInterval(randomCameraChange, 30000);
+            update(); // Retoma o loop do jogo
+        });
+    }
+}
+
+// Adiciona o evento de clique ao botão
+pauseButton.addEventListener("click", togglePause);
+
+function startCountdown(callback) {
+    const countdownNumbers = [3, 2, 1];
+    let index = 0;
+
+    countdownElement.style.display = "block"; // Mostra o contêiner de contagem regressiva
+    countdownElement.textContent = countdownNumbers[index];
+
+    const interval = setInterval(() => {
+        index++;
+        if (index < countdownNumbers.length) {
+            countdownElement.textContent = countdownNumbers[index];
+        } else {
+            clearInterval(interval); // Para a contagem regressiva
+            countdownElement.style.display = "none"; // Esconde o contêiner
+            callback(); // Chama o callback para retomar o jogo
+        }
+    }, 1000); // Intervalo de 1 segundo entre os números
+}
+
+// setInterval(() => {
+//     console.log(`Camera Position: x=${camera.position.x}, y=${camera.position.y}, z=${camera.position.z}`);
+// }, 2000);
+// setInterval(() => {
+//     console.log(`Orbit Target: x=${orbitControl.target.x}, y=${orbitControl.target.y}, z=${orbitControl.target.z}`);
+// }, 2000);
