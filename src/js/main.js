@@ -576,8 +576,6 @@ function update() {
         stopGame();
         return;
     }
-    if (score > 10) {
-    }
     if (score > 50) {
         rollingSpeed = 0.005;
     }
