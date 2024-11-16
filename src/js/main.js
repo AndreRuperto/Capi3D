@@ -14,7 +14,8 @@ var orbitControl;
 var rollingGroundSphere;
 var capivara;
 var mixer;
-var rollingSpeed=0.004;
+var rollingSpeedInitial = 0.0025
+var rollingSpeed=rollingSpeedInitial;
 var worldRadius=26;
 var sphericalHelper;
 var pathAngleValues;
@@ -636,7 +637,7 @@ function invertedCameraPosition() {
 }
 
 function randomCameraChange() {
-    const cameraPositions = [normalCameraPosition, sideviewCameraPosition, invertedCameraPosition];
+    const cameraPositions = [normalCameraPosition];
     
     // Seleciona uma posição aleatória
     const randomIndex = Math.floor(Math.random() * cameraPositions.length);
@@ -666,19 +667,19 @@ function update() {
     }
 
     if (score > 50) {
-        rollingSpeed = 0.0045;
+        rollingSpeed = 0.003;
     }
-    if  (score > 100) {
-        rollingSpeed = 0.0048;
-    }
-    if (score > 200) {
-        rollingSpeed = 0.0052;
+    if  (score > 150) {
+        rollingSpeed = 0.0035;
     }
     if (score > 300) {
-        rollingSpeed = 0.0055;
+        rollingSpeed = 0.004;
     }
-    if (score > 400) {
-        rollingSpeed = 0.0065;
+    if (score > 500) {
+        rollingSpeed = 0.0045;
+    }
+    if (score > 700) {
+        rollingSpeed = 0.005;
     }
 
     rollingGroundSphere.rotation.x += rollingSpeed;
@@ -816,7 +817,7 @@ function restartGame() {
     scoreText.innerHTML = "0"; // Atualiza o texto de pontuação para zero
     hasCollided = false;
     rollingGroundSphere.rotation.x += 2;
-    rollingSpeed = 0.004
+    rollingSpeed = rollingSpeedInitial
     mixer.timeScale = 1;
 
     // Esconde o menu de Game Over e reinicia o jogo
