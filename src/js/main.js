@@ -48,6 +48,8 @@ document.getElementById("startButton").onclick = function() {
     // Oculta o menu de início
     document.getElementById("gameMenu").style.display = "none";
     mixer.timeScale = 1;
+    // Adiciona o evento de clique ao botão inicialmente
+    pauseButton.addEventListener("click", togglePause);
     // cameraInterval = setInterval(randomCameraChange, 30000);
 
     // Inicia a animação para mover a câmera
@@ -289,14 +291,25 @@ function animate() {
 animate();
 
 // Função para lidar com o clique nos botões
-document.getElementById("capivara").addEventListener("click", () => {
-    const url = new URL('../../assets/modelos3D/capivaraPadrao.glb', import.meta.url);
-    addHero(url.href);
+Array.from(document.getElementsByClassName("capivara")).forEach(button => {
+    button.addEventListener("click", () => {
+        const url = new URL('../../assets/modelos3D/capivaraPadrao.glb', import.meta.url);
+        addHero(url.href);
+    });
 });
 
-document.getElementById("samurai").addEventListener("click", () => {
-    const url = new URL('../../assets/modelos3D/capivaraSamurai.glb', import.meta.url);
-    addHero(url.href);
+Array.from(document.getElementsByClassName("samurai")).forEach(button => {
+    button.addEventListener("click", () => {
+        const url = new URL('../../assets/modelos3D/capivaraSamurai.glb', import.meta.url);
+        addHero(url.href);
+    });
+});
+
+Array.from(document.getElementsByClassName("oculos")).forEach(button => {
+    button.addEventListener("click", () => {
+        const url = new URL('../../assets/modelos3D/capivaraOculos.glb', import.meta.url);
+        addHero(url.href);
+    });
 });
 
 
@@ -794,7 +807,7 @@ function stopGame() {
     clearInterval(cameraInterval);
     explode();
     mixer.timeScale = 0;
-
+    pauseButton.removeEventListener("click", togglePause);
     let currentScore = parseInt(scoreText.innerHTML, 10);
     let maxScore = parseInt(document.getElementById("score-maximo").innerHTML, 10);
     if (currentScore > maxScore) {
@@ -819,6 +832,7 @@ function restartGame() {
     rollingGroundSphere.rotation.x += 2;
     rollingSpeed = rollingSpeedInitial
     mixer.timeScale = 1;
+    pauseButton.addEventListener("click", togglePause);
 
     // Esconde o menu de Game Over e reinicia o jogo
     document.getElementById("gameOverMenu").style.display = "none";
@@ -837,17 +851,18 @@ const countdownElement = document.getElementById("countdown");
 function togglePause() {
     isPaused = !isPaused;
     pauseButton.textContent = isPaused ? "Resume" : "Pause";
+
     if (!isPaused) {
+        // Inicia a contagem regressiva e desativa o botão temporariamente
+        pauseButton.removeEventListener("click", togglePause);
         startCountdown(() => {
             isPaused = false;
-            // cameraInterval = setInterval(randomCameraChange, 30000);
             update(); // Retoma o loop do jogo
+            // Reativa o botão após a contagem
+            pauseButton.addEventListener("click", togglePause);
         });
     }
 }
-
-// Adiciona o evento de clique ao botão
-pauseButton.addEventListener("click", togglePause);
 
 function startCountdown(callback) {
     const countdownNumbers = [3, 2, 1];

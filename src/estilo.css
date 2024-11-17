@@ -10,7 +10,7 @@ body, html {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%); /* Centraliza o menu */
-    width: 300px;
+    width: 350px;
     height: 300px;
     background-color: rgba(0, 0, 0, .8); /* Fundo semitransparente */
     color: white;
@@ -23,7 +23,7 @@ body, html {
 }
 
 /* Estiliza a linha de acessórios */
-#row-acessorios {
+.row-acessorios {
     display: flex;
     justify-content: center; /* Centraliza os botões horizontalmente */
     gap: 10px; /* Espaçamento entre os botões */
@@ -50,8 +50,8 @@ body, html {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%); /* Centraliza o menu */
-    width: 300px;
-    height: 250px;
+    width: 350px;
+    height: 400px;
     background-color: rgba(0, 0, 0, 0.8); /* Fundo semitransparente */
     color: white;
     border-radius: 15px; /* Borda arredondada */
@@ -117,33 +117,19 @@ body, html {
     text-align: center;
 }
 
-
-#capivara {
-    width: 100px;  /* Tamanho do botão */
-    height: 100px; /* Tamanho do botão */
-    border-radius: 50%; /* Torna o botão redondo */
+.capivara {
     background-image: url('../assets/iconeAvatares/iconeCapivaraPadrao.png'); /* Coloque o caminho da imagem aqui */
-    background-size: cover; /* Faz a imagem cobrir todo o botão */
-    background-position: center; /* Centraliza a imagem */
-    border: none; /* Remove a borda padrão */
-    cursor: pointer; /* Muda o cursor para indicar que é clicável */
-    text-align: center; /* Alinha o texto no centro (caso queira manter o texto visível) */
-    color: white; /* Cor do texto */
-    font-weight: bold; /* Peso da fonte */
-    display: flex; /* Flexbox para centralizar o texto */
-    justify-content: center;
-    align-items: center;
 }
-
-#capivara:hover {
-    opacity: 0.8; /* Adiciona um efeito de hover */
+.samurai {
+    background-image: url('../assets/iconeAvatares/iconeCapivaraSamurai.png'); /* Coloque o caminho da imagem aqui */
 }
-
-#samurai {
+.oculos {
+    background-image: url('../assets/iconeAvatares/iconeCapivaraOculos.png'); /* Coloque o caminho da imagem aqui */
+}
+.capivara, .samurai, .oculos {
     width: 100px;  /* Tamanho do botão */
     height: 100px; /* Tamanho do botão */
     border-radius: 50%; /* Torna o botão redondo */
-    background-image: url('../assets/iconeAvatares/iconeCapivaraSamurai.png'); /* Coloque o caminho da imagem aqui */
     background-size: cover; /* Faz a imagem cobrir todo o botão */
     background-position: center; /* Centraliza a imagem */
     border: none; /* Remove a borda padrão */
@@ -156,6 +142,6 @@ body, html {
     align-items: center;
 }
 
-#samurai:hover {
+.capivara:hover, .samurai:hover, .oculos:hover {
     opacity: 0.8; /* Adiciona um efeito de hover */
 }
