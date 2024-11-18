@@ -10,7 +10,7 @@ export var treesInPath=[];
 export var treesPool=[];
 
 export function createTreesPool(){
-	var maxTreesInPool=10;
+	var maxTreesInPool=50;
 	var newTree;
 	for(var i=0; i<maxTreesInPool;i++){
 		newTree=createTree();
@@ -43,10 +43,8 @@ export function addPathTree() {
 	var lane= Math.floor(Math.random()*3);
 	addTree(true,lane);
 	options.splice(lane,1);
-	if(Math.random()>0.5){
-		lane= Math.floor(Math.random()*2);
-		addTree(true,options[lane]);
-	}
+    lane= Math.floor(Math.random()*2);
+    addTree(true,options[lane]);
 }
 
 function addTree(inPath, row, isLeft) {

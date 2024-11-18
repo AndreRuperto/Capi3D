@@ -30,16 +30,19 @@ export function addPathBird() {
 }
 
 function addBird(inPath, row, isLeft) {
+    console.log("pool", birdsPool);
     var newBird;
 
     // Usar pássaro do pool ou criar um novo pássaro
     if (inPath) {
+        console.log("pega do pool");
         if (birdsPool.length == 0) return;
         newBird = birdsPool.pop();
         newBird.visible = true;
         birdsInPath.push(newBird);
         sphericalHelper.set(worldRadius - 0.3, pathAngleValues[row], -rollingGroundSphere.rotation.x + 4);
     } else {
+        console.log("criando novo");
         // Espera o pássaro ser carregado
         createBird().then(bird => {
             newBird = bird;

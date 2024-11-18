@@ -28,9 +28,9 @@ var ground;
 var orbitControl;
 export var rollingGroundSphere;
 export var capivara;
-var releaseInterval = 0.5;
+var releaseInterval = 0.8;
 var mixer;
-var rollingSpeedInitial = 0.0025
+var rollingSpeedInitial = 0.003
 var rollingSpeed=rollingSpeedInitial;
 export var worldRadius=26;
 export var sphericalHelper;
@@ -485,19 +485,29 @@ function update() {
     }
 
     if (score > 50) {
-        rollingSpeed = 0.003;
+        rollingSpeed = 0.0035;
+        releaseInterval = 0.6;
     }
     if  (score > 150) {
-        rollingSpeed = 0.0035;
+        rollingSpeed = 0.004;
+        releaseInterval = 0.5;
     }
     if (score > 300) {
-        rollingSpeed = 0.004;
+        rollingSpeed = 0.0045;
+        releaseInterval = 0.4;
     }
     if (score > 500) {
-        rollingSpeed = 0.0045;
+        rollingSpeed = 0.005;
+        releaseInterval = 0.3;
     }
     if (score > 700) {
-        rollingSpeed = 0.005;
+        rollingSpeed = 0.0055;
+    }
+    if (score > 900) {
+        rollingSpeed = 0.006;
+    }
+    if (score > 1100) {
+        rollingSpeed = 0.0065;
     }
 
     rollingGroundSphere.rotation.x += rollingSpeed;
@@ -513,7 +523,7 @@ function update() {
         addPathTree();
         addPathBird();
         if (!hasCollided) {
-            score += 2 * releaseInterval;
+            score += 2;
             scoreText.innerHTML = score.toString();
         }
     }
@@ -646,12 +656,14 @@ function togglePause() {
     if (!isPaused) {
         // Inicia a contagem regressiva e desativa o botão temporariamente
         pauseButton.removeEventListener("click", togglePause);
+        document.removeEventListener("keydown", lidarTeclaPausar);
         startCountdown(() => {
             isPaused = false;
             update(); // Retoma o loop do jogo
             // Reativa o botão após a contagem
             pauseButton.addEventListener("click", togglePause);
-        });
+            document.addEventListener("keydown", lidarTeclaPausar);
+            });
     }
 }
 
