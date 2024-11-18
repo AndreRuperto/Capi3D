@@ -52,6 +52,7 @@ var scoreText;
 var score;
 var hasCollided;
 var cameraInterval;
+var currentSkyIndex = 0;
 
 createScene();
 
@@ -71,6 +72,28 @@ document.getElementById("startButton").onclick = function() {
     // Inicia o jogo
     update();
 };
+
+var skyColors = [
+    0x87CEEB, // Azul claro - dia
+    0xFFD700, // Amarelo dourado - amanhecer
+    0xFFA500, // Alaranjado - entardecer
+    0x000033, // Azul escuro - noite
+];
+
+function updateSkyColor() {
+    // Atualiza o índice do céu com base no score
+    currentSkyIndex = Math.floor(score / 10) % skyColors.length;
+
+    // Define a cor do texto do score
+    if (currentSkyIndex === 3) {
+        scoreText.style.color = 'white';
+    } else {
+        scoreText.style.color = 'black';
+    }
+
+    // Atualiza a cor do céu
+    renderer.setClearColor(skyColors[currentSkyIndex], 1);
+}
 
 function animateCameraTransition() {
     // Posição final desejada
@@ -329,7 +352,7 @@ function addWorld() {
     var firstVertexVector = new THREE.Vector3();
     var offset = new THREE.Vector3();
     var currentTier = 1;
-    var lerpValue = 0.5;
+    var lerpValue = (Math.random() * 0.5) + 0.25;
     var heightValue;
     var maxHeight = 0.07;
     
@@ -511,6 +534,8 @@ function update() {
     }
 
     rollingGroundSphere.rotation.x += rollingSpeed;
+
+    updateSkyColor();
 
     // Atualize o pulo
     updateJump();
