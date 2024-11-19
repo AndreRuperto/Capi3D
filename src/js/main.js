@@ -50,6 +50,9 @@ var score;
 var hasCollided;
 var cameraInterval;
 var currentSkyIndex = 0;
+var transitions = [];
+var currentSkyIndex = 0;
+var transitionIndex = 0;
 
 createScene();
 
@@ -71,14 +74,55 @@ document.getElementById("startButton").onclick = function() {
 };
 
 var skyColors = [
-    0x87CEEB, // Azul claro - dia
-    0xFFA500, // Alaranjado - entardecer
-    0x000033, // Azul escuro - noite
+    new THREE.Color(0x87CEEB), // Azul claro - dia
+    new THREE.Color(0xFFA500), // Alaranjado - entardecer
+    new THREE.Color(0x000033), // Azul escuro - noite
 ];
 
-function updateSkyColor() {
-    // Atualiza o índice do céu com base no score
-    currentSkyIndex = Math.floor(score / 100) % skyColors.length;
+// Gera as cores intermediárias para transições suaves
+function generateGradientColors(startColor, endColor, steps) {
+    const gradient = [];
+    for (let i = 0; i <= steps; i++) {
+        const color = new THREE.Color();
+        color.lerpColors(startColor, endColor, i / steps);
+        gradient.push(color);
+    }
+    return gradient;
+}
+
+// Configura as transições
+const transitionSteps = 500; // Define a quantidade de passos para suavidade
+for (let i = 0; i < skyColors.length; i++) {
+    const nextIndex = (i + 1) % skyColors.length;
+    transitions.push(generateGradientColors(skyColors[i], skyColors[nextIndex], transitionSteps));
+}
+
+function updateSkyColor(score) {
+    // Só começa as transições a partir de score 100
+    if (score < 100) {
+        renderer.setClearColor(skyColors[0], 1); // Fixa o azul claro até o score 100
+        scoreText.style.color = 'black';
+        return;
+    }
+
+    // Calcula o índice da transição com base no score
+    const adjustedScore = score - 100; // Ajusta o score para começar as transições em 100
+    const transitionStart = Math.floor(adjustedScore / 100) % skyColors.length;
+
+    // Se a transição mudou, reinicia o índice da transição
+    if (transitionStart !== currentSkyIndex) {
+        currentSkyIndex = transitionStart;
+        transitionIndex = 0; // Reinicia a transição
+    }
+
+    // Aplica a cor intermediária correspondente
+    if (transitionIndex < transitions[currentSkyIndex].length) {
+        renderer.setClearColor(transitions[currentSkyIndex][transitionIndex], 1);
+        transitionIndex++; // Avança para a próxima cor intermediária
+    } else {
+        // Se a transição terminar, fixa na cor final
+        renderer.setClearColor(skyColors[(currentSkyIndex + 1) % skyColors.length], 1);
+    }
 
     // Define a cor do texto do score
     if (currentSkyIndex === 2) {
@@ -86,9 +130,6 @@ function updateSkyColor() {
     } else {
         scoreText.style.color = 'black';
     }
-
-    // Atualiza a cor do céu
-    renderer.setClearColor(skyColors[currentSkyIndex], 1);
 }
 
 function animateCameraTransition() {
@@ -137,7 +178,7 @@ function createScene(){
     scene = new THREE.Scene();//the 3d scene
     camera = new THREE.PerspectiveCamera( 60, sceneWidth / sceneHeight, 0.1, 1000 );//perspective camera
     renderer = new THREE.WebGLRenderer({alpha:true});//renderer with transparent backdrop
-    renderer.setClearColor(0xfffafa, 1);
+    renderer.setClearColor(0x87CEEB, 1);
     renderer.shadowMap.enabled = true;//enable shadow
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.setSize( sceneWidth, sceneHeight );
@@ -509,7 +550,7 @@ function update() {
 
     rollingGroundSphere.rotation.x += rollingSpeed;
 
-    updateSkyColor();
+    updateSkyColor(score);
 
     // Atualize o pulo
     updateJump();
