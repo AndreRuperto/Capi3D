@@ -93,11 +93,15 @@ function createTree(){
     var tiers = 6;
     var scalarMultiplier = (Math.random() * (0.25 - 0.1)) + 0.05;
     var treeGeometry = new THREE.ConeGeometry(0.5, 1, sides, tiers);
+    treeGeometry.computeVertexNormals(); // Recalcula normais para corrigir transparência
+    
     var treeMaterial = new THREE.MeshStandardMaterial({
         color: 0x33ff33,
-        flatShading: true, // Mantenha o flatShading para um aspecto mais estilizado, ou altere para smoothShading para suavizar
+        flatShading: true,
+        side: THREE.DoubleSide, // Renderizar ambos os lados das faces
+        depthTest: true,
+        depthWrite: true,
     });
-
     // Acessando as posições de vértices na geometria com BufferGeometry
     var positions = treeGeometry.attributes.position.array;
 
@@ -142,7 +146,7 @@ function blowUpTree(vertices, sides, currentTier, scalarMultiplier, odd) {
     var midPointVector = new THREE.Vector3();
     var offset;
     for (var i = 0; i < sides; i++) {
-        vertexIndex = (currentTier * sides + i);
+        vertexIndex = currentTier * sides + i;
         // Obtendo as posições diretamente do array
         var x = vertices[vertexIndex * 3];
         var y = vertices[vertexIndex * 3 + 1];
@@ -150,26 +154,28 @@ function blowUpTree(vertices, sides, currentTier, scalarMultiplier, odd) {
         
         vertexVector.set(x, y, z);  // Definindo o vetor de vértice
 
-        midPointVector.y = vertexVector.y;
+        // Calculando o vetor médio para suavizar a geometria
+        midPointVector.set(0, vertexVector.y, 0);
+
         offset = vertexVector.clone().sub(midPointVector);
 
         if (odd) {
             if (i % 2 === 0) {
-                offset.normalize().multiplyScalar(scalarMultiplier / 6);
+                offset.normalize().multiplyScalar(scalarMultiplier / 8); // Reduzi o divisor
                 vertexVector.add(offset);
             } else {
-                offset.normalize().multiplyScalar(scalarMultiplier);
+                offset.normalize().multiplyScalar(scalarMultiplier / 2); // Reduzi o multiplicador
                 vertexVector.add(offset);
-                vertexVector.y = vertices[(vertexIndex + sides) * 3 + 1] + 0.05;
+                vertexVector.y += 0.03; // Pequeno ajuste na altura
             }
         } else {
             if (i % 2 !== 0) {
-                offset.normalize().multiplyScalar(scalarMultiplier / 6);
+                offset.normalize().multiplyScalar(scalarMultiplier / 8);
                 vertexVector.add(offset);
             } else {
-                offset.normalize().multiplyScalar(scalarMultiplier);
+                offset.normalize().multiplyScalar(scalarMultiplier / 2);
                 vertexVector.add(offset);
-                vertexVector.y = vertices[(vertexIndex + sides) * 3 + 1] + 0.05;
+                vertexVector.y += 0.03;
             }
         }
 
@@ -186,7 +192,7 @@ function tightenTree(vertices, sides, currentTier) {
     var midPointVector = new THREE.Vector3();
     var offset;
     for (var i = 0; i < sides; i++) {
-        vertexIndex = (currentTier * sides + i);
+        vertexIndex = currentTier * sides + i;
         // Obtendo as posições diretamente do array
         var x = vertices[vertexIndex * 3];
         var y = vertices[vertexIndex * 3 + 1];
@@ -194,10 +200,12 @@ function tightenTree(vertices, sides, currentTier) {
         
         vertexVector.set(x, y, z);  // Definindo o vetor de vértice
 
-        midPointVector.y = vertexVector.y;
+        // Calculando o vetor médio para suavizar a geometria
+        midPointVector.set(0, vertexVector.y, 0);
+
         offset = vertexVector.clone().sub(midPointVector);
 
-        offset.normalize().multiplyScalar(0.06);
+        offset.normalize().multiplyScalar(0.04); // Reduzi o multiplicador para evitar deformações
         vertexVector.sub(offset);
 
         // Atualizando os valores no array de posições

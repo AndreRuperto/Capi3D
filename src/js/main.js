@@ -82,7 +82,7 @@ var skyColors = [
 
 function updateSkyColor() {
     // Atualiza o índice do céu com base no score
-    currentSkyIndex = Math.floor(score / 10) % skyColors.length;
+    currentSkyIndex = Math.floor(score / 100) % skyColors.length;
 
     // Define a cor do texto do score
     if (currentSkyIndex === 3) {
@@ -550,7 +550,7 @@ function update() {
         if (!hasCollided) {
             score += 2;
             scoreText.innerHTML = score.toString();
-        }
+        }        
     }
 
     doTreeLogic();
@@ -632,15 +632,17 @@ function stopGame() {
     explode();
     mixer.timeScale = 0;
     pauseButton.removeEventListener("click", togglePause);
-    let currentScore = parseInt(scoreText.innerHTML, 10);
-    let maxScore = parseInt(document.getElementById("score-maximo").innerHTML, 10);
+
+    let currentScore = parseInt(scoreText.innerHTML, 10) || 0;
+    let maxScore = parseInt(document.getElementById("score-maximo").innerHTML, 10) || 0;
+
     if (currentScore > maxScore) {
-        document.getElementById("score-maximo").innerHTML=scoreText.innerHTML;
+        document.getElementById("score-maximo").innerHTML = currentScore;
     }
 
     // Exibe o menu de Game Over
     document.getElementById("gameOverMenu").style.display = "flex";
-    document.getElementById("restartButton").onclick = restartGame; // Atualiza para garantir o evento correto
+    document.getElementById("restartButton").onclick = restartGame;
     document.addEventListener("keydown", lidarTeclaReiniciar);
     document.removeEventListener("keydown", lidarTeclaPausar);
 }
