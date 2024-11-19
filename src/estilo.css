@@ -90,18 +90,22 @@ body, html {
 }
 
 #pause-button {
-    background-color: #3a7ebf;
+    background-color: transparent;
+    height: 50px;
     color: white;
     border: none;
-    padding: 10px 20px;
-    font-size: 16px;
+    padding: 10px;
     cursor: pointer;
-    border-radius: 5px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-image: url('../assets/icones/icons8-pausa-48.png'); /* Adiciona a imagem de fundo */
+    background-size: cover; /* Faz a imagem cobrir todo o botão */
+    background-position: center; /* Posiciona a imagem no centro do botão */
+}
+#pause-button.paused {
+    background-image: url('../assets/icones/icons8-reproduzir-48.png');
 }
 
-#pause-button:hover {
-    background-color: #2f6cae;
+#pause-button.playing {
+    background-image: url('../assets/icones/icons8-pausa-48.png');
 }
 
 #countdown {

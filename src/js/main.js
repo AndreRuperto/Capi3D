@@ -171,16 +171,6 @@ function createScene(){
 	scoreText.style.top = 50 + 'px';
 	scoreText.style.left = 10 + 'px';
 	document.body.appendChild(scoreText);
-  
-  var infoText = document.createElement('div');
-	infoText.style.position = 'absolute';
-	infoText.style.width = 100;
-	infoText.style.height = 100;
-	infoText.style.backgroundColor = "yellow";
-	infoText.innerHTML = "UP - Jump, Left/Right - Move";
-	infoText.style.top = 10 + 'px';
-	infoText.style.left = 10 + 'px';
-	document.body.appendChild(infoText);
 }
 
 function addExplosion() {
@@ -648,17 +638,23 @@ const pauseButton = document.getElementById("pause-button");
 const countdownElement = document.getElementById("countdown");
 
 function togglePause() {
+    pauseButton.classList.remove('playing');
+    pauseButton.classList.add('paused');
     isPaused = !isPaused;
-    pauseButton.textContent = isPaused ? "Resume" : "Pause";
+
 
     if (!isPaused) {
         // Inicia a contagem regressiva e desativa o botão temporariamente
+        pauseButton.classList.remove('playing');
+        pauseButton.classList.add('paused');
         pauseButton.removeEventListener("click", togglePause);
         document.removeEventListener("keydown", lidarTeclaPausar);
         startCountdown(() => {
             isPaused = false;
             update(); // Retoma o loop do jogo
             // Reativa o botão após a contagem
+            pauseButton.classList.add('playing');
+            pauseButton.classList.remove('paused');
             pauseButton.addEventListener("click", togglePause);
             document.addEventListener("keydown", lidarTeclaPausar);
             });
