@@ -89,16 +89,28 @@ body, html {
     z-index: 10; /* Garante que o botão fique sobre o canvas */
 }
 
+#info {
+    position: absolute;
+    width: 70px;
+    aspect-ratio: 1;
+    background-image: url("../assets/icones/buttons.png");
+    background-size: cover;
+    background-position: center;
+    margin: 10px;
+}
+
 #pause-button {
     background-color: transparent;
     height: 50px;
+    aspect-ratio: 1;
     color: white;
     border: none;
-    padding: 10px;
+    padding: 0;
+    margin: 5px;
     cursor: pointer;
-    background-image: url('../assets/icones/icons8-pausa-48.png'); /* Adiciona a imagem de fundo */
-    background-size: cover; /* Faz a imagem cobrir todo o botão */
-    background-position: center; /* Posiciona a imagem no centro do botão */
+    background-image: url('../assets/icones/icons8-pausa-48.png');
+    background-size: cover;
+    background-position: center;
 }
 #pause-button.paused {
     background-image: url('../assets/icones/icons8-reproduzir-48.png');

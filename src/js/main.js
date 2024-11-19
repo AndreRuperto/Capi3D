@@ -163,14 +163,21 @@ function createScene(){
 
 	document.onkeydown = handleKeyDown;
 	
-	scoreText = document.createElement('div');
-	scoreText.style.position = 'absolute';
-	scoreText.style.width = 100;
-	scoreText.style.height = 100;
-	scoreText.innerHTML = "0";
-	scoreText.style.top = 50 + 'px';
-	scoreText.style.left = 10 + 'px';
-	document.body.appendChild(scoreText);
+    scoreText = document.createElement('div');
+    scoreText.style.paddingTop = '10px';
+    scoreText.style.fontSize = '20px';
+    scoreText.style.position = 'absolute';
+    scoreText.style.width = '100px'; // Certifique-se de que a largura tenha unidade
+    scoreText.style.height = '100px'; // Certifique-se de que a altura tenha unidade
+    scoreText.innerHTML = "0";
+    
+    // Centralizar horizontalmente e colocar no topo
+    scoreText.style.top = '0'; // Fica no topo da tela
+    scoreText.style.left = '50%'; // 50% da largura da tela
+
+    scoreText.style.textShadow = '1px 1px 0px white, -1px -1px 0px white, 1px -1px 0px white, -1px 1px 0px white';
+
+    document.body.appendChild(scoreText);
 }
 
 function addExplosion() {
