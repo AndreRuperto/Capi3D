@@ -33,25 +33,32 @@ Para rodar o jogo localmente, siga as etapas abaixo:
 - Clone este repositório para sua máquina local:
   ```bash
   git clone https://github.com/seu-usuario/Capi3D.git
+  ```
 
 ### 3. Instalar as Dependências
 
 - No diretório do projeto, abra um terminal e execute:
   ```bash
   npm install
+  ```
+
 ### 4. Instalar o Parcel (Bundler)
 
 - Para garantir que o bundler utilizado no projeto seja o mesmo, instale o Parcel:
   ```bash
   npm install parcel --save-dev
+  ```
 - Ou, para instalação global:
   ```bash
   npm install parcel -g
+  ```
+
 ### 5. Rodar o Servidor
 
 - Para iniciar o servidor de desenvolvimento, execute:
   ```bash
   npm start
+  ```
 - O jogo estará disponível em: http://localhost:1234
 
 ## ✅ Objetivos e Funcionalidades
@@ -85,6 +92,16 @@ A estrutura do código foi organizada de forma modular, com separação clara de
 - **Sistema de Pontuação**: A pontuação é aumentada conforme o tempo que o jogador sobrevive no jogo, e novos obstáculos surgem com o aumento da dificuldade.
 - **Colisões e Desempenho**: O sistema de colisões foi otimizado para garantir um desempenho estável, mantendo uma taxa mínima de 30 FPS.
 
+## 🎯 Regras (Jogabilidade)
+
+- O objetivo do jogo é sobreviver o maior tempo possível enquanto desvia de obstáculos e coleta pontos.
+- A cada 2 pontos, novos obstáculos aparecem, aumentando a dificuldade.
+- Controles:
+  - **Setas ou W, A, S, D**: Movimentam a capivara entre as pistas.
+  - **Seta para Cima ou W**: Faz a capivara pular.
+- O jogo termina quando a capivara colide com um obstáculo.
+- O jogador pode pausar e reiniciar o jogo através dos botões na interface.
+
 ## 🛠️ Checklist de Desenvolvimento
 
 ### Fase 1 - Análise
@@ -107,6 +124,7 @@ A estrutura do código foi organizada de forma modular, com separação clara de
 
 - **Transparência nas árvores**: Corrigido o problema de transparência com `depthTest` e `side: THREE.DoubleSide`.
 - **Problemas de performance**: Ajustes no tamanho das texturas e otimização de modelos GLTF para garantir carregamento rápido.
+- **Ajuste do `rollingSpeed`**: Inicialmente, a velocidade de rotação do cenário aumentava linearmente com o score. Após testes, observou-se que valores muito altos prejudicavam a jogabilidade. O ideal foi limitar o aumento de velocidade após o score 700, para evitar que o jogo se tornasse incontrolável. Implementamos um controle que estabiliza o `rollingSpeed` a partir de um valor seguro.
 
 ## 💡 Contribuições
 
