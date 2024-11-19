@@ -186,8 +186,8 @@ function createScene(){
 	createTreesPool();
 	createBirdsPool();
 	addWorld();
-	const url = new URL('../../assets/modelos3D/capivaraPadrao.glb', import.meta.url);
-    addHero(url.href);
+	const url = new URL('./assets/modelos3D/capivaraPadrao.glb', window.location.origin).href;
+    addHero(url);
 	addLight();
 	addExplosion();
 	
