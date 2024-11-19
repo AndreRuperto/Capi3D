@@ -1,7 +1,6 @@
 {
   "name": "capi3d",
   "version": "1.0.0",
-  "main": "main.js",
   "scripts": {
     "clean": "node clean-cache.js",
     "start": "npm run clean && parcel serve ./src/index.html",
