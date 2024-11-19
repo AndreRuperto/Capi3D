@@ -450,6 +450,14 @@ function addLight() {
     scene.add(ambientLight);
 }
 
+function normalCameraPosition() {
+    camera.position.z = 6.5;
+	camera.position.y = 3;
+	camera.position.x = 0;
+
+    camera.lookAt(0, 0, 0);
+}
+
 function update() {
     if (!capivara) {
         requestAnimationFrame(update);
