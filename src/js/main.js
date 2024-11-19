@@ -72,7 +72,6 @@ document.getElementById("startButton").onclick = function() {
 
 var skyColors = [
     0x87CEEB, // Azul claro - dia
-    0xFFD700, // Amarelo dourado - amanhecer
     0xFFA500, // Alaranjado - entardecer
     0x000033, // Azul escuro - noite
 ];
@@ -82,7 +81,7 @@ function updateSkyColor() {
     currentSkyIndex = Math.floor(score / 100) % skyColors.length;
 
     // Define a cor do texto do score
-    if (currentSkyIndex === 3) {
+    if (currentSkyIndex === 2) {
         scoreText.style.color = 'white';
     } else {
         scoreText.style.color = 'black';
