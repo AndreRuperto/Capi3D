@@ -10,16 +10,18 @@ body, html {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%); /* Centraliza o menu */
-    width: 350px;
-    height: 300px;
-    background-color: rgba(0, 0, 0, .8); /* Fundo semitransparente */
+    width: auto; /* Adapta a largura ao conteúdo */
+    min-width: 350px; /* Define um limite mínimo */
+    max-width: 90%; /* Impede que fique muito grande */
+    background-color: rgba(0, 0, 0, 0.8); /* Fundo semitransparente */
     color: white;
-    border-radius: 15px; /* Borda arredondada */
+    border-radius: 15px;
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
+    align-items: center;
     font-family: Arial, sans-serif;
+    padding: 20px; /* Adiciona espaçamento interno */
+    box-sizing: border-box; /* Garante que padding não altere o tamanho total */
 }
 
 /* Estiliza a linha de acessórios */
@@ -50,8 +52,8 @@ body, html {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%); /* Centraliza o menu */
-    width: 350px;
-    height: 400px;
+    width: auto;
+    height: auto;
     background-color: rgba(0, 0, 0, 0.8); /* Fundo semitransparente */
     color: white;
     border-radius: 15px; /* Borda arredondada */
@@ -60,6 +62,7 @@ body, html {
     align-items: center;
     flex-direction: column;
     font-family: Arial, sans-serif;
+    padding: 20px;
 }
 
 .gameOverContent {
@@ -133,31 +136,93 @@ body, html {
     text-align: center;
 }
 
-.capivara {
-    background-image: url('../assets/iconeAvatares/iconeCapivaraPadrao.png'); /* Coloque o caminho da imagem aqui */
-}
-.samurai {
-    background-image: url('../assets/iconeAvatares/iconeCapivaraSamurai.png'); /* Coloque o caminho da imagem aqui */
-}
-.oculos {
-    background-image: url('../assets/iconeAvatares/iconeCapivaraOculos.png'); /* Coloque o caminho da imagem aqui */
-}
-.capivara, .samurai, .oculos {
-    width: 100px;  /* Tamanho do botão */
-    height: 100px; /* Tamanho do botão */
-    border-radius: 50%; /* Torna o botão redondo */
-    background-size: cover; /* Faz a imagem cobrir todo o botão */
-    background-position: center; /* Centraliza a imagem */
-    border: none; /* Remove a borda padrão */
-    cursor: pointer; /* Muda o cursor para indicar que é clicável */
-    text-align: center; /* Alinha o texto no centro (caso queira manter o texto visível) */
-    color: white; /* Cor do texto */
-    font-weight: bold; /* Peso da fonte */
-    display: flex; /* Flexbox para centralizar o texto */
+.row-acessorios {
+    display: flex;
     justify-content: center;
-    align-items: center;
+    gap: 20px;
+    margin: 15px 0;
 }
 
-.capivara:hover, .samurai:hover, .oculos:hover {
-    opacity: 0.8; /* Adiciona um efeito de hover */
+.row-acessorios button {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    border: none;
+    background: none;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.1); /* Fundo padrão do botão */
+}
+
+.row-acessorios button:hover {
+    transform: scale(1.1); /* Ampliar o botão no hover */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Imagem dentro do botão */
+.row-acessorios button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+    transition: transform 0.3s ease-in-out;
+}
+
+.capivara::before {
+    background-image: url('..//assets/iconeAvatares/iconeCapivaraPadrao.png');
+}
+
+.oculos::before {
+    background-image: url('..//assets/iconeAvatares/iconeCapivaraOculos.png'); 
+}
+
+.samurai::before {
+    background-image: url('..//assets/iconeAvatares/iconeCapivaraSamurai.png'); 
+}
+.aristocrata::before {
+    background-image: url('..//assets/iconeAvatares/iconeCapivaraAristocrata.png');
+}
+
+/* Hover nas imagens */
+.row-acessorios button:hover::before {
+    transform: scale(1.2); /* Amplia a imagem */
+}
+
+#developers {
+    margin-top: 15px;
+    text-align: center;
+}
+
+#developers p {
+    margin: 0 0 10px; /* Espaçamento entre o título e os links */
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.developer-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Espaçamento entre os links */
+}
+
+.developer-links a {
+    text-decoration: none;
+    color: white;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.developer-links a:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+    color: black;
+    transform: scale(1.1); /* Leve aumento ao passar o mouse */
 }

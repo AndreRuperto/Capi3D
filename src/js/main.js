@@ -332,6 +332,13 @@ Array.from(document.getElementsByClassName("oculos")).forEach(button => {
     });
 });
 
+Array.from(document.getElementsByClassName("aristocrata")).forEach(button => {
+    button.addEventListener("click", () => {
+        const url = new URL('../../assets/modelos3D/capivaraAristocrata.glb', import.meta.url);
+        addHero(url.href);
+    });
+});
+
 
 function addWorld() {
     var sides = 40;
