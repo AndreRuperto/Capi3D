@@ -1,7 +1,7 @@
 # Capi3D
 
 ## 📜 Descrição
-Este repositório contém o projeto de jogo desenvolvido na disciplina de Computabilidade e Complexidade de Algoritmos no 6º Semestre de Ciência da Computação no UDF.
+Este repositório contém o projeto de jogo desenvolvido na disciplina de Computabilidade e Complexidade de Algoritmos no 6º Semestre de Ciência da Computação no UDF
 
 ## ✅ Pré-requisitos
 - Caso não tenha instalado, baixe o [Node.js](https://nodejs.org)
