@@ -22,10 +22,7 @@ var sceneHeight;
 var camera;
 var scene;
 var renderer;
-var dom;
 var sun;
-var ground;
-var orbitControl;
 export var rollingGroundSphere;
 export var capivara;
 var releaseInterval = 0.8;
@@ -453,40 +450,6 @@ function addLight() {
     scene.add(ambientLight);
 }
 
-function normalCameraPosition() {
-    camera.position.z = 6.5;
-	camera.position.y = 3;
-	camera.position.x = 0;
-
-    camera.lookAt(0, 0, 0);
-}
-
-function sideviewCameraPosition() {
-    camera.position.z = 5;
-	camera.position.y = 4;
-    camera.position.x = -5;
-
-    camera.lookAt(0, 0, 0);
-}
-
-function invertedCameraPosition() {
-    camera.position.z = -6;
-	camera.position.y = 4;
-	camera.position.x = 1;
-
-    camera.lookAt(0, 0, 1);
-}
-
-function randomCameraChange() {
-    const cameraPositions = [normalCameraPosition];
-    
-    // Seleciona uma posição aleatória
-    const randomIndex = Math.floor(Math.random() * cameraPositions.length);
-    
-    // Chama a função selecionada aleatoriamente
-    cameraPositions[randomIndex]();
-}
-
 function update() {
     if (!capivara) {
         requestAnimationFrame(update);
@@ -603,6 +566,7 @@ function explode() {
 function render(){
     renderer.render(scene, camera);//draw
 }
+
 function onWindowResize() {
 	//resize & align
 	sceneHeight = window.innerHeight;
@@ -712,13 +676,6 @@ function startCountdown(callback) {
         }
     }, 1000); // Intervalo de 1 segundo entre os números
 }
-
-// setInterval(() => {
-//     console.log(`Camera Position: x=${camera.position.x}, y=${camera.position.y}, z=${camera.position.z}`);
-// }, 2000);
-// setInterval(() => {
-//     console.log(`Orbit Target: x=${orbitControl.target.x}, y=${orbitControl.target.y}, z=${orbitControl.target.z}`);
-// }, 2000);
 
 function doTreeLogic() {
     var treePos = new THREE.Vector3();
