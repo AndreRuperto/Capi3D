@@ -116,6 +116,13 @@ function updateSkyColor(score) {
         // Se a transição terminar, fixa na cor final
         renderer.setClearColor(skyColors[(currentSkyIndex + 1) % skyColors.length], 1);
     }
+
+    // Define a cor do texto do score
+    if (currentSkyIndex === 2) {
+        scoreText.style.color = 'white';
+    } else {
+        scoreText.style.color = 'black';
+    }
 }
 
 function animateCameraTransition() {
@@ -171,7 +178,7 @@ function createScene(){
 	document.body.appendChild(renderer.domElement);
 	createTreesPool();
 	addWorld();
-	const url = new URL('../../assets/modelos3D/capivaraPadrao.glb', window.location.origin).href;
+	const url = new URL('./assets/modelos3D/capivaraPadrao.glb', window.location.origin).href;
     addHero(url);
 	addLight();
 	addExplosion();
