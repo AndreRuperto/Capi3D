@@ -10,13 +10,6 @@ import {
     treesPool,
 } from './trees'
 
-import { 
-    createBirdsPool,
-    addPathBird, 
-    birdsInPath,
-    birdsPool,
-} from './birds'
-
 var sceneWidth;
 var sceneHeight;
 var camera;
@@ -184,7 +177,6 @@ function createScene(){
     renderer.setSize( sceneWidth, sceneHeight );
 	document.body.appendChild(renderer.domElement);
 	createTreesPool();
-	createBirdsPool();
 	addWorld();
 	const url = new URL('./assets/modelos3D/capivaraPadrao.glb', window.location.origin).href;
     addHero(url);
@@ -561,7 +553,6 @@ function update() {
     if (clock.getElapsedTime() > releaseInterval) {
         clock.start();
         addPathTree();
-        addPathBird();
         if (!hasCollided) {
             score += 2;
             scoreText.innerHTML = score.toString();
@@ -569,7 +560,6 @@ function update() {
     }
 
     doTreeLogic();
-    doBirdLogic();
     doExplosionLogic();
     render();
     requestAnimationFrame(update);
