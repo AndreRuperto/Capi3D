@@ -143,6 +143,10 @@ A estrutura do código foi organizada de forma modular, com separação clara de
 - **Problemas de performance**: Ajustes no tamanho das texturas e otimização de modelos GLTF para garantir carregamento rápido.
 - **Ajuste do `rollingSpeed`**: Inicialmente, a velocidade de rotação do cenário aumentava linearmente com o score. Após testes, observou-se que valores muito altos prejudicavam a jogabilidade. O ideal foi limitar o aumento de velocidade após o score 700, para evitar que o jogo se tornasse incontrolável. Implementamos um controle que estabiliza o `rollingSpeed` a partir de um valor seguro.
 
+## 🔗 Links Úteis:
+- [Checklist](https://docs.google.com/document/d/1dh3IUMgBm_J0zIMXdWMLhEguWGZsk2lFLU_OWokvN2k/edit?tab=t.0)
+- [Tema do Projeto](https://docs.google.com/document/d/1uS6eCDvQHK8LSWmvK19Y8bqnO69rYJUZKhcgDAzADCw/edit?tab=t.0)
+
 ## 💡 Contribuições
 
 Contribuições são bem-vindas! Se você encontrar problemas ou tiver sugestões para melhorias, fique à vontade para abrir uma issue ou enviar um pull request.
