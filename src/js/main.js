@@ -190,7 +190,7 @@ function createScene(){
 	
 	window.addEventListener('resize', onWindowResize, false);//resize callback
 
-	document.onkeydown = handleKeyDown;
+	document.addEventListener('keydown', handleKeyDown);
 	
     scoreText = document.createElement('div');
     scoreText.style.paddingTop = '10px';
@@ -674,6 +674,7 @@ const pauseButton = document.getElementById("pause-button");
 const countdownElement = document.getElementById("countdown");
 
 function togglePause() {
+    document.removeEventListener('keydown', handleKeyDown);
     pauseButton.classList.remove('playing');
     pauseButton.classList.add('paused');
     isPaused = !isPaused;
@@ -693,6 +694,7 @@ function togglePause() {
             pauseButton.classList.remove('paused');
             pauseButton.addEventListener("click", togglePause);
             document.addEventListener("keydown", lidarTeclaPausar);
+            document.addEventListener('keydown', handleKeyDown);
             });
     }
 }
