@@ -21,8 +21,18 @@
 - **Blender** (para criação de modelos 3D)
 
 ## 📋 Pré-requisitos
+Para jogar **Capi3D**, você tem duas opções:
 
-Para rodar o jogo localmente, siga as etapas abaixo:
+### Acessar diretamente no navegador
+
+O jogo está disponível online e pode ser acessado em:  
+🔗 **[https://capi3d.com.br/](https://capi3d.com.br/)**  
+
+Recomenda-se utilizar navegadores atualizados, como **Google Chrome**, **Microsoft Edge**, **Firefox** ou **Opera**, para garantir o melhor desempenho.
+
+### Rodar localmente
+
+Caso deseje rodar o jogo localmente para desenvolvimento ou testes, siga as etapas abaixo:
 
 ### 1. Instalação do Node.js
 
