@@ -141,7 +141,7 @@ A estrutura do código foi organizada de forma modular, com separação clara de
 
 - **Transparência nas árvores**: Corrigido o problema de transparência com `depthTest` e `side: THREE.DoubleSide`.
 - **Problemas de performance**: Ajustes no tamanho das texturas e otimização de modelos GLTF para garantir carregamento rápido.
-- **Ajuste do `rollingSpeed`**: Inicialmente, a velocidade de rotação do cenário aumentava linearmente com o score. Após testes, observou-se que valores muito altos prejudicavam a jogabilidade. O ideal foi limitar o aumento de velocidade após o score 700, para evitar que o jogo se tornasse incontrolável. Implementamos um controle que estabiliza o `rollingSpeed` a partir de um valor seguro.
+- **Ajuste do `rollingSpeed`**: Inicialmente, a velocidade de rotação do cenário aumentava linearmente com o score. Após testes, observou-se que valores muito altos prejudicavam a jogabilidade. O ideal foi limitar o aumento de velocidade após o score 1100, para evitar que o jogo se tornasse incontrolável. Implementamos um controle que ajusta a velocidade de forma gradual e estabiliza o `rollingSpeed` a partir de 0.0065.
 
 ## 🔗 Links Úteis:
 - [Checklist](https://docs.google.com/document/d/1dh3IUMgBm_J0zIMXdWMLhEguWGZsk2lFLU_OWokvN2k/edit?tab=t.0)
