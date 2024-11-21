@@ -1,6 +1,10 @@
 import * as THREE from 'three';
 export default THREE;
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import capivaraPadraoModelUrl from 'url:../../assets/modelos3D/capivaraPadrao.glb';
+import capivaraSamuraiModelUrl from 'url:../../assets/modelos3D/capivaraSamurai.glb';
+import capivaraOculosModelUrl from 'url:../../assets/modelos3D/capivaraOculos.glb';
+import capivaraAristocrataModelUrl from 'url:../../assets/modelos3D/capivaraAristocrata.glb';
 
 import { 
     createTreesPool, 
@@ -171,8 +175,7 @@ function createScene(){
 	document.body.appendChild(renderer.domElement);
 	createTreesPool();
 	addWorld();
-	const url = new URL('../../assets/modelos3D/capivaraPadrao.glb', import.meta.url);
-    addHero(url.href);
+	addHero(capivaraPadraoModelUrl);
 	addLight();
 	addExplosion();
 	
@@ -339,29 +342,25 @@ animate();
 // Função para lidar com o clique nos botões
 Array.from(document.getElementsByClassName("capivara")).forEach(button => {
     button.addEventListener("click", () => {
-        const url = new URL('../../assets/modelos3D/capivaraPadrao.glb', import.meta.url);
-        addHero(url.href);
+        addHero(capivaraPadraoModelUrl);
     });
 });
 
 Array.from(document.getElementsByClassName("samurai")).forEach(button => {
     button.addEventListener("click", () => {
-        const url = new URL('../../assets/modelos3D/capivaraSamurai.glb', import.meta.url);
-        addHero(url.href);
+        addHero(capivaraSamuraiModelUrl);
     });
 });
 
 Array.from(document.getElementsByClassName("oculos")).forEach(button => {
     button.addEventListener("click", () => {
-        const url = new URL('../../assets/modelos3D/capivaraOculos.glb', import.meta.url);
-        addHero(url.href);
+        addHero(capivaraOculosModelUrl);
     });
 });
 
 Array.from(document.getElementsByClassName("aristocrata")).forEach(button => {
     button.addEventListener("click", () => {
-        const url = new URL('../../assets/modelos3D/capivaraAristocrata.glb', import.meta.url);
-        addHero(url.href);
+        addHero(capivaraAristocrataModelUrl);
     });
 });
 
@@ -666,7 +665,6 @@ function restartGame() {
 
     // Aguarda 100ms antes de chamar update
     setTimeout(() => {
-        console.log("Jogo reiniciado!");
         update();
     }, 100);
 }

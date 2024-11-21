@@ -4,7 +4,7 @@
   "scripts": {
     "clean": "node clean-cache.js",
     "start": "npm run clean && parcel serve ./src/index.html",
-    "build": "npm run clean && parcel build ./src/index.html",
+    "prod": "npm run clean && parcel build ./src/index.html && npx serve dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -16,6 +16,7 @@
     "parcel": "^2.12.0"
   },
   "dependencies": {
-    "three": "^0.170.0"
+    "three": "^0.170.0",
+    "three-stdlib": "^2.34.0"
   }
 }
