@@ -10,13 +10,6 @@ import {
     treesPool,
 } from './trees'
 
-import { 
-    createBirdsPool,
-    addPathBird, 
-    birdsInPath,
-    birdsPool,
-} from './birds'
-
 var sceneWidth;
 var sceneHeight;
 var camera;
@@ -123,13 +116,6 @@ function updateSkyColor(score) {
         // Se a transição terminar, fixa na cor final
         renderer.setClearColor(skyColors[(currentSkyIndex + 1) % skyColors.length], 1);
     }
-
-    // Define a cor do texto do score
-    if (currentSkyIndex === 2) {
-        scoreText.style.color = 'white';
-    } else {
-        scoreText.style.color = 'black';
-    }
 }
 
 function animateCameraTransition() {
@@ -184,7 +170,6 @@ function createScene(){
     renderer.setSize( sceneWidth, sceneHeight );
 	document.body.appendChild(renderer.domElement);
 	createTreesPool();
-	createBirdsPool();
 	addWorld();
 	const url = new URL('./assets/modelos3D/capivaraPadrao.glb', window.location.origin).href;
     addHero(url);
@@ -561,7 +546,6 @@ function update() {
     if (clock.getElapsedTime() > releaseInterval) {
         clock.start();
         addPathTree();
-        addPathBird();
         if (!hasCollided) {
             score += 2;
             scoreText.innerHTML = score.toString();
@@ -569,7 +553,6 @@ function update() {
     }
 
     doTreeLogic();
-    doBirdLogic();
     doExplosionLogic();
     render();
     requestAnimationFrame(update);
@@ -762,36 +745,5 @@ function doTreeLogic() {
             treesPool.push(oneTree); // Adiciona de volta ao pool
             oneTree.visible = false; // Torna invisível
         }
-    });
-}
-
-function doBirdLogic() {
-    var oneBird;
-    var birdPos = new THREE.Vector3();
-    var birdsToRemove = [];
-
-    birdsInPath.forEach(function (element, index) {
-        oneBird = birdsInPath[index];
-        if (oneBird && oneBird.matrixWorld) { // Verifique se oneBird e oneBird.matrixWorld são válidos
-            birdPos.setFromMatrixPosition(oneBird.matrixWorld);
-
-            if (birdPos.z > 6 && oneBird.visible) {
-                // Saiu da zona de visão
-                birdsToRemove.push(oneBird);
-            } else {
-                // Verificar colisão
-                if (birdPos.distanceTo(capivara.position) <= 0.8) {
-                    hasCollided = true;
-                }
-            }
-        }
-    });
-
-    birdsToRemove.forEach(function (element, index) {
-        oneBird = birdsToRemove[index];
-        var fromWhere = birdsInPath.indexOf(oneBird);
-        birdsInPath.splice(fromWhere, 1);
-        birdsPool.push(oneBird); // Retorna o pássaro ao pool
-        oneBird.visible = false;
     });
 }
