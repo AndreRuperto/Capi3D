@@ -88,7 +88,6 @@ A estrutura do código foi organizada de forma modular, com separação clara de
 ## ⚙️ Como Funciona
 
 - **Cenário 3D**: A cada nova partida, o jogo cria um mapa esférico com árvores e obstáculos distribuídos aleatoriamente.
-- **Interação**: O jogador pode controlar a capivara com as teclas de seta ou W, A, S, D. O objetivo é evitar as árvores e outros obstáculos enquanto coleta pontos.
 - **Sistema de Pontuação**: A pontuação é aumentada conforme o tempo que o jogador sobrevive no jogo, e novos obstáculos surgem com o aumento da dificuldade.
 - **Colisões e Desempenho**: O sistema de colisões foi otimizado para garantir um desempenho estável, mantendo uma taxa mínima de 30 FPS.
 
