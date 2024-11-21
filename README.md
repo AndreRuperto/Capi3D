@@ -101,6 +101,14 @@ A estrutura do código foi organizada de forma modular, com separação clara de
 - O jogo termina quando a capivara colide com um obstáculo.
 - O jogador pode pausar e reiniciar o jogo através dos botões na interface.
 
+## 🧮 Identificação da Complexidade do Jogo
+
+- **Colisão entre objetos:** A colisão é calculada utilizando a distância Euclidiana no espaço 3D. Para reduzir custos, apenas objetos visíveis são verificados, resultando em complexidade \( O(n) \), onde \( n \) é o número de obstáculos visíveis.
+- **Pooling de objetos:** Um sistema de reaproveitamento foi implementado para árvores e obstáculos, garantindo operações eficientes de \( O(1) \) para inserção e remoção, além de minimizar o uso de memória.
+- **Renderização 3D:** A performance foi otimizada com técnicas como frustum culling (não renderizar objetos fora do campo de visão) e redução de vértices em modelos 3D. Isso garante taxas de FPS acima de 30.
+- **Aumento de dificuldade:** A velocidade de rotação do cenário e a frequência de obstáculos aumentam gradualmente com base na pontuação do jogador, utilizando algoritmos simples de atualização com complexidade \( O(1) \).
+- **Gerenciamento de memória:** Objetos fora do campo de visão são reciclados ou removidos, mantendo o consumo de memória constante durante partidas longas.
+
 ## 🛠️ Checklist de Desenvolvimento
 
 ### Fase 1 - Análise
