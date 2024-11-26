@@ -146,6 +146,7 @@ A estrutura do código foi organizada de forma modular, com separação clara de
 ## 🔗 Links Úteis:
 - [Checklist](https://docs.google.com/document/d/1dh3IUMgBm_J0zIMXdWMLhEguWGZsk2lFLU_OWokvN2k/edit?tab=t.0)
 - [Etapas do Projeto](https://docs.google.com/document/d/1uS6eCDvQHK8LSWmvK19Y8bqnO69rYJUZKhcgDAzADCw/edit?tab=t.0)
+- [Funções Matemáticas](https://docs.google.com/document/d/1E3agRA7e9vr0D51-oS9ZfLN88J2ZkvLrjGHOqB7MacM/edit?tab=t.0)
 
 ## 💡 Contribuições
 
