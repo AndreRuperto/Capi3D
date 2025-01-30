@@ -1,0 +1,12 @@
+{
+    "buildCommand": "parcel build src/index.html && cp ads.txt dist/",
+    "devCommand": "parcel src/index.html",
+    "outputDirectory": "dist",
+    "routes": [
+      {
+        "src": "/ads.txt",
+        "dest": "/ads.txt"
+      }
+    ]
+  }
+  
