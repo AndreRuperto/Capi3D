@@ -1,35 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>Capi 3D</title>
-    <link rel="stylesheet" href="estilo.css">
+    	<meta charset="utf-8">
+	<meta name="description" content="Capi 3D - Um jogo divertido onde você controla uma capivara em um mundo 3D. Jogue agora!">
+	<meta name="keywords" content="Capi 3D, jogo capivara, game capivara, impressão 3D, modelagem 3D">
+	<meta name="author" content="Capi3D Team">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    	<title>Capi 3D</title>
+    	<link rel="stylesheet" href="estilo.css">
 	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4632359455129395"
      crossorigin="anonymous"></script>
 </head>
 <body>
-    <div id="info"></div>
+    <section id="info"></section>
     <!-- Menu de Início -->
-    <div id="gameMenu">
+    <section id="gameMenu">
 		<h2>Capi 3D</h2>
 		<button id="startButton">Iniciar Jogo</button>
 		<p>Acessórios</p>
 		<div class="row-acessorios">
-			<button class="capivara"></button>
-			<button class="oculos"></button>
-            <button class="samurai"></button>
-            <button class="aristocrata"></button>
+			<button class="capivara" aria-label="Selecionar capivara"></button>
+			<button class="oculos" aria-label="Selecionar capivara de oculos"></button>
+            		<button class="samurai" aria-label="Selecionar capivara samurai"></button>
+		        <button class="aristocrata" aria-label="Selecionar capivara aristocrata"></button>
 		</div>
-        <div id="developers">
+    	</section>
+        <section id="developers">
             <p>Desenvolvedores:</p>
             <div class="developer-links">
-                <a href="https://github.com/AndreRuperto" target="_blank">André</a>
-                <a href="https://github.com/jhenriquedsm" target="_blank">José Henrique</a>
-                <a href="https://github.com/Julio-A-Tec" target="_blank">Julio</a>
-                <a href="https://github.com/miguel-mb-cell" target="_blank">Miguel</a>
+                <a href="https://github.com/AndreRuperto" target="_blank" rel="noopener noreferrer">André</a>
+                <a href="https://github.com/jhenriquedsm" target="_blank" rel="noopener noreferrer">José Henrique</a>
+                <a href="https://github.com/Julio-A-Tec" target="_blank" rel="noopener noreferrer">Julio</a>
+                <a href="https://github.com/miguel-mb-cell" target="_blank" rel="noopener noreferrer">Miguel</a>
             </div>
-        </div>
-    </div>
+        </section>
 
 	<div id="ui-container">
 		<button id="pause-button"></button>
@@ -38,7 +42,7 @@
 	<div id="countdown"></div>
 
     <!-- Menu de Game Over -->
-    <div id="gameOverMenu" style="display: none;">
+    <section id="gameOverMenu" style="display: none;">
         <div class="gameOverContent">
             <h2>Game Over!</h2>
             <p>Você colidiu com a árvore!</p>
@@ -47,14 +51,32 @@
             <button id="restartButton">Reiniciar Jogo</button>
             <p>Acessórios</p>
             <div class="row-acessorios">
-                <button class="capivara"></button>
-                <button class="samurai"></button>
-                <button class="oculos"></button>
-                <button class="aristocrata"></button>
+                <button class="capivara" aria-label="Selecionar capivara"></button>
+                <button class="samurai" aria-label="Selecionar capivara samurai"></button>
+                <button class="oculos" aria-label="Selecionar capivara com oculos"></button>
+                <button class="aristocrata" aria-label="Selecionar capivara aristocrata"></button>
             </div>
         </div>
-    </div>
+    </section>
 
     <script type="module" src="./js/main.js"></script>
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "VideoGame",
+        "name": "Capi 3D",
+        "description": "Um jogo divertido onde você controla uma capivara em um mundo 3D.",
+        "author": {
+            "@type": "Organization",
+            "name": "Capi3D Team"
+        },
+        "genre": "Arcade",
+        "publisher": {
+            "@type": "Organization",
+            "name": "Capi3D"
+        }
+    }
+    </script>
 </body>
 </html>
