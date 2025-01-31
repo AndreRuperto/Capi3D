@@ -61,22 +61,30 @@
 
     <script type="module" src="./js/main.js"></script>
 
-<script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "VideoGame",
-        "name": "Capi 3D",
-        "description": "Um jogo divertido onde você controla uma capivara em um mundo 3D.",
-        "author": {
-            "@type": "Organization",
-            "name": "Capi3D Team"
-        },
-        "genre": "Arcade",
-        "publisher": {
-            "@type": "Organization",
-            "name": "Capi3D"
+    <script>
+        document.addEventListener("keydown", function (event) {
+            if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+                event.preventDefault();
+            }
+        });
+    </script>
+
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "VideoGame",
+            "name": "Capi 3D",
+            "description": "Um jogo divertido onde você controla uma capivara em um mundo 3D.",
+            "author": {
+                "@type": "Organization",
+                "name": "Capi3D Team"
+            },
+            "genre": "Arcade",
+            "publisher": {
+                "@type": "Organization",
+                "name": "Capi3D"
+            }
         }
-    }
-</script>
+    </script>
 </body>
 </html>
