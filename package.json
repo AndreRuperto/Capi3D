@@ -12,10 +12,12 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@parcel/packager-raw-url": "^2.13.3",
     "buffer": "^6.0.3",
-    "parcel": "^2.12.0"
+    "parcel": "^2.13.3"
   },
   "dependencies": {
+    "@parcel/transformer-jsonld": "^2.13.3",
     "three": "^0.170.0",
     "three-stdlib": "^2.34.0"
   }
