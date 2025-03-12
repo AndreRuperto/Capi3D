@@ -14,7 +14,9 @@
   "devDependencies": {
     "@parcel/packager-raw-url": "^2.13.3",
     "buffer": "^6.0.3",
-    "parcel": "^2.13.3"
+    "daisyui": "^5.0.3",
+    "parcel": "^2.13.3",
+    "tailwindcss": "^4.0.13"
   },
   "dependencies": {
     "@parcel/transformer-jsonld": "^2.13.3",
