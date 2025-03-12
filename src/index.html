@@ -8,30 +8,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Capi 3D - Jogo de Capivara em Mundo 3D Grátis</title>
     <link rel="icon" type="image/x-icon" href="/assets/icones/favicon.ico">
-    <link rel="stylesheet" href="estilo.css">
+    <!-- Adicionando Tailwind/DaisyUI via CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.3/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4632359455129395" crossorigin="anonymous"></script>
 </head>
 <body>
     <!-- Menu de Início -->
-    <section id="gameMenu">
-		<h2>Capi 3D - Jogo da Capivara 3D</h2>
-		<button id="startButton">Iniciar Jogo</button>
-		<p>Acessórios</p>
-		<div class="row-acessorios">
-			<button class="capivara" aria-label="Selecionar capivara"></button>
-			<button class="oculos" aria-label="Selecionar capivara de oculos"></button>
-            		<button class="samurai" aria-label="Selecionar capivara samurai"></button>
-		        <button class="aristocrata" aria-label="Selecionar capivara aristocrata"></button>
-		</div>
-        <section id="developers">
-            <p>Desenvolvedores:</p>
-            <div class="developer-links">
-                <a href="https://github.com/AndreRuperto" target="_blank" rel="noopener noreferrer">André</a>
-                <a href="https://github.com/jhenriquedsm" target="_blank" rel="noopener noreferrer">José Henrique</a>
-                <a href="https://github.com/Julio-A-Tec" target="_blank" rel="noopener noreferrer">Julio</a>
-                <a href="https://github.com/miguel-mb-cell" target="_blank" rel="noopener noreferrer">Miguel</a>
+    <section id="gameMenu" class="fixed inset-0 flex items-center justify-center z-50">
+        <div class="card bg-base-100 shadow-xl w-full max-w-md p-6 bg-opacity-90">
+            <div class="card-body text-center">
+                <h2 class="card-title text-2xl font-bold">Capi 3D - Jogo da Capivara 3D</h2>
+                <button id="startButton" class="btn btn-primary mt-4">Iniciar Jogo</button>
+                <p class="mt-4 font-semibold">Acessórios</p>
+                <div class="flex justify-center gap-4 mt-2 row-acessorios">
+                    <button class="capivara btn btn-circle btn-ghost relative w-16 h-16" aria-label="Selecionar capivara">
+                        <img src="/assets/iconeAvatares/iconeCapivaraPadrao.png" alt="Capivara Padrão" class="w-full h-full object-cover rounded-full">
+                    </button>
+                    <button class="oculos btn btn-circle btn-ghost relative w-16 h-16" aria-label="Selecionar capivara de óculos">
+                        <img src="/assets/iconeAvatares/iconeCapivaraOculos.png" alt="Capivara com Óculos" class="w-full h-full object-cover rounded-full">
+                    </button>
+                    <button class="samurai btn btn-circle btn-ghost relative w-16 h-16" aria-label="Selecionar capivara samurai">
+                        <img src="/assets/iconeAvatares/iconeCapivaraSamurai.png" alt="Capivara Samurai" class="w-full h-full object-cover rounded-full">
+                    </button>
+                    <button class="aristocrata btn btn-circle btn-ghost relative w-16 h-16" aria-label="Selecionar capivara aristocrata">
+                        <img src="/assets/iconeAvatares/iconeCapivaraAristocrata.png" alt="Capivara Aristocrata" class="w-full h-full object-cover rounded-full">
+                    </button>
+                </div>
+                <section id="developers" class="mt-6">
+                    <p class="font-semibold">Desenvolvedores:</p>
+                    <div class="flex justify-center gap-2 mt-2">
+                        <a href="https://github.com/AndreRuperto" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline">André</a>
+                        <a href="https://github.com/jhenriquedsm" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline">José Henrique</a>
+                        <a href="https://github.com/Julio-A-Tec" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline">Julio</a>
+                        <a href="https://github.com/miguel-mb-cell" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline">Miguel</a>
+                    </div>
+                </section>
             </div>
-        </section>
+        </div>
     </section>
 
 	<div id="ui-container">
@@ -41,19 +55,29 @@
 	<div id="countdown"></div>
 
     <!-- Menu de Game Over -->
-    <section id="gameOverMenu" style="display: none;">
-        <div class="gameOverContent">
-            <h2>Game Over!</h2>
-            <p>Você colidiu com a árvore!</p>
-            <p>Score máximo:</p>
-            <p id="score-maximo">0</p>
-            <button id="restartButton">Reiniciar Jogo</button>
-            <p>Acessórios</p>
-            <div class="row-acessorios">
-                <button class="capivara" aria-label="Selecionar capivara"></button>
-                <button class="samurai" aria-label="Selecionar capivara samurai"></button>
-                <button class="oculos" aria-label="Selecionar capivara com oculos"></button>
-                <button class="aristocrata" aria-label="Selecionar capivara aristocrata"></button>
+    <section id="gameOverMenu" class="fixed inset-0 flex items-center justify-center z-50" style="display: none;">
+        <div class="card bg-base-100 shadow-xl w-full max-w-md p-6 bg-opacity-90">
+            <div class="card-body text-center">
+                <h2 class="card-title text-3xl font-bold mx-auto text-error">Game Over!</h2>
+                <p>Você colidiu com a árvore!</p>
+                <p class="font-semibold">Score máximo:</p>
+                <p id="score-maximo" class="text-lg font-bold mx-auto text-blue-500">0</p>
+                <button id="restartButton" class="btn btn-primary mt-4">Reiniciar Jogo</button>
+                <p class="mt-4 font-semibold">Acessórios</p>
+                <div class="flex justify-center gap-4 mt-2 row-acessorios">
+                    <button class="capivara btn btn-circle btn-ghost relative w-16 h-16" aria-label="Selecionar capivara">
+                        <img src="/assets/iconeAvatares/iconeCapivaraPadrao.png" alt="Capivara Padrão" class="w-full h-full object-cover rounded-full">
+                    </button>
+                    <button class="oculos btn btn-circle btn-ghost relative w-16 h-16" aria-label="Selecionar capivara de óculos">
+                        <img src="/assets/iconeAvatares/iconeCapivaraOculos.png" alt="Capivara com Óculos" class="w-full h-full object-cover rounded-full">
+                    </button>
+                    <button class="samurai btn btn-circle btn-ghost relative w-16 h-16" aria-label="Selecionar capivara samurai">
+                        <img src="/assets/iconeAvatares/iconeCapivaraSamurai.png" alt="Capivara Samurai" class="w-full h-full object-cover rounded-full">
+                    </button>
+                    <button class="aristocrata btn btn-circle btn-ghost relative w-16 h-16" aria-label="Selecionar capivara aristocrata">
+                        <img src="/assets/iconeAvatares/iconeCapivaraAristocrata.png" alt="Capivara Aristocrata" class="w-full h-full object-cover rounded-full">
+                    </button>
+                </div>
             </div>
         </div>
     </section>
