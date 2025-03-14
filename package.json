@@ -2,10 +2,11 @@
   "name": "capi3d",
   "version": "1.0.0",
   "scripts": {
+    "prebuild": "npm install --force",
     "clean": "node clean-cache.js",
     "start": "npm run clean && parcel serve ./src/index.html",
     "prod": "npm run clean && parcel build ./src/index.html && npx serve dist",
-    "build": "npm run clean && parcel build ./src/index.html && node copy-ads.js",
+    "build": "npm run clean && parcel build ./src/index.html --no-cache --no-source-maps && node copy-ads.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
