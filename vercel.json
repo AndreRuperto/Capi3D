@@ -1,5 +1,5 @@
 {
-    "buildCommand": "parcel build src/index.html && cp ads.txt dist/",
+    "buildCommand": "npm run build",
     "devCommand": "parcel src/index.html",
     "outputDirectory": "dist",
     "routes": [

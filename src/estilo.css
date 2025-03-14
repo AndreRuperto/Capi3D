@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 body, html {
     margin: 0;
     padding: 0;
@@ -52,10 +54,18 @@ body, html {
 
 /* Botão de pausa */
 #pause-button {
+    position: absolute;
+    height: 35px;
+    aspect-ratio: 1;
+    top: 10px;
+    right: 10px;
     background-image: url('../assets/icones/icons8-pausa-48.png');
     background-size: cover;
     background-position: center;
     transition: background-image 0.3s ease;
+}
+#pause-button:hover {
+    cursor: pointer;
 }
 
 #pause-button.paused {
@@ -68,11 +78,45 @@ body, html {
 
 /* Contagem regressiva */
 #countdown {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 80px;
+    color: #ffffff;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-#gameOverMenu .card-title {
+#gameOverMenu h2 {
     display: flex;
     justify-content: center;
     width: 100%;
+    font-size: 40px !important;
+}
+
+#gameMenu .card, #gameOverMenu .card{
+    color: #FFF;
+    background: rgb(97, 50, 22);
+    border: solid rgb(131, 52, 0) 2px;
+}
+
+#developers .btn {
+    color: #FFF;
+}
+
+#developers .btn:hover {
+    background-color: #556B2F;
+    border-color: #FFF;
+}
+
+#startButton {
+    background-color: #556B2F;
+    color: #FFF;
+    border: none;
+    font-size: 18px;
+}
+
+#startButton:hover {
+    background-color: #33ff33;
+    color: rgb(97, 50, 22);
 }

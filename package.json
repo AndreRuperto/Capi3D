@@ -5,6 +5,7 @@
     "clean": "node clean-cache.js",
     "start": "npm run clean && parcel serve ./src/index.html",
     "prod": "npm run clean && parcel build ./src/index.html && npx serve dist",
+    "build": "npm run clean && parcel build ./src/index.html && node copy-ads.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -13,13 +14,16 @@
   "description": "",
   "devDependencies": {
     "@parcel/packager-raw-url": "^2.13.3",
+    "autoprefixer": "^10.4.21",
     "buffer": "^6.0.3",
     "daisyui": "^5.0.3",
     "parcel": "^2.13.3",
+    "postcss": "^8.5.3",
     "tailwindcss": "^4.0.13"
   },
   "dependencies": {
     "@parcel/transformer-jsonld": "^2.13.3",
+    "@tailwindcss/postcss": "^4.0.13",
     "three": "^0.170.0",
     "three-stdlib": "^2.34.0"
   }
